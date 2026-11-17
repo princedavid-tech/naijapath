@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "app/pages/**/*.vue",
+    "app/components/**/*.vue",
+    "app/features/*/*/index.ts",
+    "app/features/**/ui/**/*.vue",
+    "app/features/**/composition/*.ts",
+    "server/**/*.ts",
+    "scripts/*.{mjs,mts}"
+  ],
+  "project": ["app/**/*.{ts,vue}", "server/**/*.ts", "scripts/*.{mjs,mts}"],
+  "ignoreExportsUsedInFile": true,
+  "ignoreDependencies": ["vue-router", "vue-tsc"]
+}

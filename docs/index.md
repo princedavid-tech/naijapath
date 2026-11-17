@@ -1,0 +1,100 @@
+# NaijaPath web — component & composable index
+
+The one catalogue for this repo. Do not create a second index (e.g. `app/components/n/README.md`) —
+it will drift. When you add or change a part, update this file in the same commit.
+
+## Design tokens — `app/assets/css/tailwind.css`
+
+- Raw hex in `:root` (`@layer base`), mapped in `@theme inline`. `--color-*: initial` removes Tailwind's
+  stock palette: **an off-palette class like `bg-blue-500` renders nothing.**
+- Ramps keep the shape `50 / 100 / 150 / 500 / 600`: `green` (brand), `terracotta`, `base`
+  (0, 50, 100, 150, 500, 600, 900), plus status `success / warning / danger / info` and `amber` (stars).
+- Breakpoints are defined once here: `xs 375 · sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1440`.
+  `nuxt.config.ts → image.screens` mirrors the pixel values for responsive images.
+- Radius from one `--radius: 12px` → `rounded-sm` 8 (buttons/inputs) · `rounded-lg` 12 (cards/photos) ·
+  `rounded-xl` 16. Shadows: exactly `shadow-card` and `shadow-card-hover`.
+- Type: `font-heading` (Plus Jakarta Sans), `font-body` (Inter); sizes `text-hero | h2 | h3 | lead |
+  label | stat | stage`. **Adding a `--text-*` token? Also add it to `cn()`'s list in `app/utils/utils.ts`**,
+  or tailwind-merge will treat it as a colour and drop it.
+- Utilities: `tabular` (tabular-nums), `prose-measure` (68ch), `link-underline` (moving underline),
+  `reveal` (one-shot rise, only hidden when `<html class="js">`), `defer-render`
+  (content-visibility for light below-the-fold sections — see AGENTS.md before using it).
+- Contrast: every pair used is listed and verified by `npm run contrast` (fails the run on any miss).
+
+## Design-system parts — `app/components/n/`
+
+Every part: `data-slot="…"`, `cn(defaults, props.class)`, a typed `class` prop, slots not content props.
+Variants live in sibling `*-variants.ts` files (importable from plain `.ts`).
+
+> **Naming rule (bit us once):** Nuxt names components from the folder path. `n/<folder>/N<Folder>….vue`
+> registers as `N<Folder>…`. A file whose name doesn't start with its folder's name gets a longer name
+> (`n/field/NLabel.vue` → `NFieldNLabel`) and `<NLabel>` silently renders **nothing**. One folder per
+> part family, named after it.
+
+| Part | Path | Notes |
+|---|---|---|
+| `NButton` | `button/NButton.vue` + `button-variants.ts` | `color` (primary · accent · inverse) × `variant` (solid · outline · ghost) via `compoundVariants`; `size` default/lg/icon (all ≥ 44px); `shape="pill"` hero only; `to` renders an `NLink`. Labels may wrap below 640px. |
+| `NLink` | `link/NLink.vue` | The only link primitive. `#id` / `/#id` → smooth scroll + focus move + URL update (instant under reduced motion). External → new tab + SR hint. `.pdf` → `download`. Paths this app doesn't own → plain `<a>`; owned routes → `NuxtLink`. |
+| `NTextLink` | `text-link/NTextLink.vue` | CTA text link: moving underline, arrow slides 4px, 44px tall. |
+| `NCard` + `NCardHeader` `NCardTitle` `NCardDescription` `NCardAction` `NCardContent` `NCardFooter` | `card/` | Header restructures itself when a `card-action` is present (`has-data-[slot=card-action]`). `as` for semantics (`figure`, `article`, `li`). |
+| `NPill` | `pill/NPill.vue` + `pill-variants.ts` | Tones: green · terracotta · terracotta-on-white · white · green-soft · muted. |
+| `NSectionLabel` | `section-label/NSectionLabel.vue` | 13px caps label, 0.05em tracking. A `<p>` — the H2 after it is the heading. |
+| `NStatus` | `status/NStatus.vue` | `<NStatus status="confirmed" />` — dot/icon **and** text, through `app/utils/status/`. |
+| `NStat` + `NStatValue` `NStatLabel` `NStatCaption` | `stat/` | Tabular figures. |
+| `NIcon` | `icon/NIcon.vue` | `name` from `app/utils/icons.ts`. Decorative by default; `label` only when the icon alone carries meaning. |
+| `NAvatar` | `avatar/NAvatar.vue` | Initials, or a neutral silhouette (placeholders only). Decorative. |
+| `NRating` | `rating/NRating.vue` | Amber stars with `role="img"` + label; always shown next to the numeric score. |
+| `NLabel` | `label/NLabel.vue` | Always visible above its input; `required` adds `*` + SR text. |
+| `NInput` | `input/NInput.vue` | 16px text (no iOS zoom), `invalid` → 2px red border + `aria-invalid`; `describedby`; `surface="dark"` for the footer. |
+| `NFieldError` | `field-error/NFieldError.vue` | Icon + text, linked from the input via `aria-describedby`. |
+| `NContainer` | `container/NContainer.vue` | 1280px, 16/24/32px gutters. |
+| `NLogo` | `logo/NLogo.vue` | **Interim mark** — swap the inline SVG for the client's brandmark. |
+| `NSkipLink` | `skip-link/NSkipLink.vue` | First focusable element; targets `#main`. |
+
+## Cross-cutting systems — `app/utils/`
+
+| System | File(s) | Rule |
+|---|---|---|
+| `cn` | `utils.ts` | `twMerge(clsx(…))`, extended with the custom tokens. |
+| Icons | `icons.ts` | Semantic name → Phosphor glyph (raw SVG, only the weights used, from `@phosphor-icons/core`). Templates use `<NIcon name="…">`, never a Phosphor import. |
+| Status | `status/` (types · registry · resolver · palette · index) | Raw backend string → alias table → canonical → `{label, icon, tone}`. New spelling = one alias line. |
+| Dates | `date-formatters.ts` | `APP_TIME_ZONE = "Africa/Lagos"`; `formatTime`, `formatDate`, `toIsoInZone` (built-in `Intl`, assembled from `formatToParts` so server and browser output match). Never write `h:mm a` at a call site; pass raw timestamps down. |
+| API envelope | `api-envelope.ts` + `types/api.ts` | `unwrapApiResponse` on every write: `status:false` on HTTP 200 throws, so it can't render as success. |
+| Motion | `easing.ts` | `easeBrand` = `cubic-bezier(.2,.7,.2,1)`; `MOTION_MS`; `prefersReducedMotion()`. |
+| Scrolling | `scroll.ts` | `scrollToSection(id)` — native smooth scroll + focus move. No scroll-jacking. |
+
+## App composables — `app/composables/`
+
+| Composable | Purpose |
+|---|---|
+| `useCustomFetchNoAuth()` / `normalizeApiError()` | The one axios client → same-origin `/backend/**` proxy. |
+| `useThreeScene({ canvas, container, load, minWidth, pointer })` | Lifecycle for a lazily-imported WebGL scene: capability gate (WebGL2, > 4 cores, no Save-Data, ≥ minWidth), loads after first paint, DPR ≤ 1.5, pauses offscreen / hidden tab, reduced motion = one static frame, disposes on unmount. Status `idle → ready | fallback`. |
+| `useInViewOnce(el)` | One-shot IntersectionObserver reveal (replaces GSAP/ScrollTrigger). |
+
+## Feature slice — `app/features/marketing/home/`
+
+```
+domain/          home-copy.ts (VERBATIM brief copy) · home-microcopy.ts (everything NOT in the brief)
+                 home-routes.ts (paths, section ids, API, social) · home-testimonials.ts
+                 hero-path-field.ts (pure geometry shared by WebGL + SVG fallback)
+infrastructure/  webgl/hero-path-scene.ts (three.js; dynamically imported only)
+composition/     use-mh-newsletter · use-mh-stage-path · use-mh-count-up   (auto-imported)
+ui/mh-home/      index.vue (root) + one component per section → <MhHome…>
+index.ts         barrel — domain only
+```
+
+Sections (brief order): `site-header` (+ `mobile-menu`, lazy) · `hero` (+ `hero-path`, `session-confirmed-card`) · `trust-bar`
+(+ `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`) · `commission` (+ `cohort-dashboard-card`) ·
+`how-it-works` · `social-proof` (+ `testimonial-card`) · `join` (+ `audience-card`) · `site-footer`
+(+ `newsletter-form`).
+
+## Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server on :3000. **New `ui/` directory → restart** (the glob runs once). |
+| `npm run check` | `oxfmt → oxlint → nuxt typecheck` — the verification loop. |
+| `npm run contrast` | WCAG 2.2 AA audit of every colour pair in use. |
+| `npm run knip` | Unused files / exports / dependencies. |
+| `node scripts/generate-contours.mts` | Rebuild the hero contour SVG from `hero-path-field.ts`. |
+| `node scripts/generate-brand-assets.mjs` | Rebuild `og-image.jpg` + `apple-touch-icon.png`. |

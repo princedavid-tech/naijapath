@@ -1,0 +1,309 @@
+/*
+ * NaijaPath design tokens — the design system's single source of truth.
+ * Pattern from ARCHITECTURE.md §2: raw hex in :root (@layer base) → mapped in @theme inline.
+ *
+ * `--color-*: initial` wipes Tailwind's stock palette. `bg-violet-500` etc. render NOTHING.
+ * If an element is invisible, check that its colour exists below before anything else.
+ *
+ * Breakpoints are defined ONCE, here. (No Vuetify → no second or third copy.)
+ * nuxt.config.ts `image.screens` mirrors these pixel values for responsive image sizes.
+ */
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ── base (neutrals) ─────────────────────────────────────────── */
+    --base-0: #ffffff;
+    --base-50: #f9f7f4; /* warm white */
+    --base-100: #f3f4f6; /* light grey — input fill, alt rows */
+    --base-150: #e5e7eb; /* card border, hairlines */
+    --base-500: #6b7280; /* supporting text — the lightest grey allowed for text on white */
+    --base-600: #374151; /* body text */
+    --base-900: #1a1a1a; /* near-black headings — never pure #000 */
+
+    /* ── green (brand) ───────────────────────────────────────────── */
+    --green-50: #f0f7f2; /* mint section background */
+    --green-100: #e8f0eb;
+    --green-150: #cfe3d6;
+    --green-500: #1b6b3a; /* primary: headlines, buttons, accents, focus ring */
+    --green-600: #1b3a2d; /* deep: Commission band, Organisations card, footer ONLY */
+
+    /* ── terracotta (replaces guideline orange #D24B00, which fails AA for 16px white) ── */
+    --terracotta-50: #fbefea;
+    --terracotta-100: #f3d9ce;
+    --terracotta-150: #e7bba8;
+    --terracotta-500: #b5451b;
+    --terracotta-600: #963614;
+
+    /* ── functional (status only — always paired with a text label) ── */
+    --success-50: #f0fdf4;
+    --success-150: #bbf7d0;
+    --success-500: #15803d;
+    --warning-50: #fffbeb;
+    --warning-150: #fde68a;
+    --warning-500: #b45309;
+    --danger-50: #fef2f2;
+    --danger-100: #fecaca; /* error text/border on dark surfaces */
+    --danger-150: #fecaca;
+    --danger-500: #b91c1c;
+    --info-50: #eff6ff;
+    --info-150: #bfdbfe;
+    --info-500: #1d4ed8;
+
+    /* ── lime (accent of the final layout) — only ON green-600 or behind green-600 text.
+          Never as text on white/light: it has no contrast there. ───────────────── */
+    --lime-400: #c4f22f;
+    --lime-500: #b2e01c; /* hover */
+
+    /* ── amber (rating stars only) ─────────────────────────────────── */
+    --amber-500: #d97706;
+
+    /* ── shape & depth ─────────────────────────────────────────────── */
+    --radius: 12px;
+
+    /* ── motion ────────────────────────────────────────────────────── */
+    --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --dur-ui: 200ms;
+    --dur-reveal: 400ms;
+    --dur-path: 1400ms;
+
+    /* ── layout ────────────────────────────────────────────────────── */
+    --header-h: 4.5rem; /* 72px sticky header — used by scroll-padding for anchor jumps */
+    --focus-ring: var(--green-500);
+  }
+}
+
+@theme inline {
+  /* Palette reset: only the colours above exist. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-base-0: var(--base-0);
+  --color-base-50: var(--base-50);
+  --color-base-100: var(--base-100);
+  --color-base-150: var(--base-150);
+  --color-base-500: var(--base-500);
+  --color-base-600: var(--base-600);
+  --color-base-900: var(--base-900);
+
+  --color-green-50: var(--green-50);
+  --color-green-100: var(--green-100);
+  --color-green-150: var(--green-150);
+  --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+
+  --color-terracotta-50: var(--terracotta-50);
+  --color-terracotta-100: var(--terracotta-100);
+  --color-terracotta-150: var(--terracotta-150);
+  --color-terracotta-500: var(--terracotta-500);
+  --color-terracotta-600: var(--terracotta-600);
+
+  --color-success-50: var(--success-50);
+  --color-success-150: var(--success-150);
+  --color-success-500: var(--success-500);
+  --color-warning-50: var(--warning-50);
+  --color-warning-150: var(--warning-150);
+  --color-warning-500: var(--warning-500);
+  --color-danger-50: var(--danger-50);
+  --color-danger-100: var(--danger-100);
+  --color-danger-150: var(--danger-150);
+  --color-danger-500: var(--danger-500);
+  --color-info-50: var(--info-50);
+  --color-info-150: var(--info-150);
+  --color-info-500: var(--info-500);
+
+  --color-amber-500: var(--amber-500);
+  --color-lime-400: var(--lime-400);
+  --color-lime-500: var(--lime-500);
+
+  /* Breakpoint reset: defined once, here. */
+  --breakpoint-*: initial;
+  --breakpoint-xs: 23.4375rem; /* 375px */
+  --breakpoint-sm: 40rem; /* 640px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-2xl: 90rem; /* 1440px */
+
+  --spacing: 0.25rem;
+
+  /* Radius: derived from one value. */
+  --radius-*: initial;
+  --radius-sm: calc(var(--radius) - 4px); /* 8px — buttons, inputs */
+  --radius-lg: var(--radius); /* 12px — cards, photos */
+  --radius-xl: calc(var(--radius) + 4px); /* 16px — large feature surfaces */
+
+  /* Shadows: exactly two. */
+  --shadow-*: initial;
+  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.08);
+  --shadow-card-hover: 0 4px 16px rgb(0 0 0 / 0.12);
+
+  /* Typefaces (self-hosted by @nuxt/fonts with metric-adjusted fallbacks). */
+  --font-*: initial;
+  --font-heading:
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Fluid type scale. Hero: 32px at 320 → 48px at ≥1280 (desktop), where the H1 is given the
+     column + gutter width so it sets on exactly two lines (brief §02). */
+  --text-hero: clamp(2rem, 1.6rem + 1.75vw, 3rem);
+  --text-hero--line-height: 1.08;
+  --text-hero--letter-spacing: -0.02em;
+  /* Large, medium-weight section headings (editorial layout): 32px → 52px. */
+  --text-display: clamp(2rem, 1.4rem + 2vw, 3.25rem);
+  --text-display--line-height: 1.12;
+  --text-display--letter-spacing: -0.02em;
+  --text-h2: clamp(1.75rem, 1.5rem + 0.6vw, 2rem); /* 28–32px */
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem); /* 20–24px */
+  --text-h3--line-height: 1.3;
+  --text-lead: 1.125rem; /* 18px */
+  --text-lead--line-height: 1.6;
+  --text-label: 0.8125rem; /* 13px — small-caps section labels */
+  --text-label--line-height: 1.2;
+  --text-stat: clamp(2rem, 1.7rem + 1vw, 2.5rem);
+  --text-stat--line-height: 1;
+  --text-stage: clamp(3rem, 2.5rem + 1.6vw, 4rem);
+  --text-stage--line-height: 1;
+
+  --container-page: 80rem; /* 1280px */
+  --container-prose: 68ch;
+
+  --ease-brand: var(--ease-brand);
+}
+
+/* ── Global base ───────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    color-scheme: light; /* No dark mode — by design. */
+  }
+
+  /* Anchor jumps (native, scrollIntoView and Nuxt's router all honour scroll-margin) land
+     below the sticky header instead of under it. */
+  [id] {
+    scroll-margin-top: var(--header-h);
+  }
+
+  /* Smooth in-page scrolling, only for people who have not asked for reduced motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--base-0);
+    color: var(--base-600);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip; /* belt-and-braces: no horizontal scroll at 320px */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--base-900);
+    text-wrap: balance;
+  }
+
+  /* No global `text-wrap: pretty` on paragraphs: it re-runs line breaking for every <p> and
+     measured ~0.3s of extra style/layout on a throttled mobile CPU. Headings keep `balance`. */
+
+  img,
+  svg,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  ::selection {
+    background-color: var(--green-150);
+    color: var(--base-900);
+  }
+
+  /* Focus: 2px solid green, 2px offset. Dark surfaces flip the ring to white. Never removed. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  [data-surface="dark"] {
+    --focus-ring: var(--base-0);
+  }
+
+  /* Sections that are skip/anchor targets receive programmatic focus without a ring flash. */
+  [tabindex="-1"]:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Reduced motion: no animation anywhere. Components also render their final frame. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ── Utilities that need real CSS ──────────────────────────────────── */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Below-the-fold sections: the browser skips style/layout/paint until they approach the
+   viewport (cuts first-frame work on slow phones). Content stays in the accessibility tree,
+   find-in-page and anchor navigation. `auto` remembers the real size once rendered. */
+@utility defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+@utility prose-measure {
+  max-width: 68ch;
+}
+
+/* Text link with a moving underline (hover/focus), used for in-copy and card CTAs. */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-ui) var(--ease-brand);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1.5px;
+  }
+}
+
+/* Reveal primitive — toggled once by the useReveal composable. Hidden state only applies with JS. */
+@utility reveal {
+  .js &:not([data-revealed="true"]) {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  transition:
+    opacity var(--dur-reveal) var(--ease-brand),
+    transform var(--dur-reveal) var(--ease-brand);
+  transition-delay: var(--reveal-delay, 0ms);
+}
