@@ -2,7 +2,8 @@
 
 Every piece of text the homepage renders, captured from the live page before the
 `redesign-v3` work. Owner-approved removals since then: the hero's "Session Confirmed" card
-(2026-11-19); the dev-only "Testimonial pending" placeholders (replaced by labelled design samples).
+(2026-11-19); the dev-only "Testimonial pending" placeholders (replaced by labelled design samples);
+the text wordmark replaced by the client's logo image, alt "NaijaPath" (2026-11-19).
 **The redesign may move, re-group or re-style this content, but must not
 add, remove, shorten or rewrite any of it.**
 
@@ -19,7 +20,7 @@ add, remove, shorten or rewrite any of it.**
 - **P** Abuja · Lagos · Diaspora
 - **ARIA-LABEL** NaijaPath on social media
 - **LINK** NaijaPath home → `/`
-- **TEXT** NaijaPath
+- **ALT** NaijaPath
 - **ARIA-LABEL** Main
 - **LINK** Find Career Guidance → `#for-you`
 - **LINK** How NaijaPath Works → `#how-it-works`
@@ -43,7 +44,7 @@ add, remove, shorten or rewrite any of it.**
 - **LINK** Book a Session → `/book-a-session`
 - **TEXT** Book a Session • Book a Session •
 - **SR-ONLY** Illustration of the NaijaPath platform
-- **TEXT** NaijaPath
+- **ALT** NaijaPath
 
 ## block-2
 
@@ -216,7 +217,7 @@ add, remove, shorten or rewrite any of it.**
 ## site-footer
 
 - **LINK** NaijaPath home → `/`
-- **TEXT** NaijaPath
+- **ALT** NaijaPath
 - **P** Structured career guidance for Nigeria and the world.
 - **P** Abuja · Lagos · Diaspora
 - **ARIA-LABEL** NaijaPath on social media
@@ -265,6 +266,7 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
 [
   "alt|A career practitioner and a young professional review a session plan together on a laptop",
   "alt|A young professional takes part in a virtual career guidance session on a laptop at a desk",
+  "alt|NaijaPath",
   "aria-label|Close menu",
   "aria-label|Footer",
   "aria-label|Main",
@@ -375,7 +377,6 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
   "text|Main",
   "text|Menu",
   "text|Monthly career insights, sector updates, and guidance tools - straight to your inbox.",
-  "text|NaijaPath",
   "text|NaijaPath at a glance",
   "text|Naijapath gives development organisations, government programmes, and corporate partners a structured platform to deliver career guidance at scale.",
   "text|Navigate your career with structured, verified guidance.",

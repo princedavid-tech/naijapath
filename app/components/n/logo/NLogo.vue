@@ -1,48 +1,28 @@
 <template>
-  <span data-slot="logo" :class="cn('inline-flex items-center gap-2.5', props.class)">
-    <!--
-      BRAND ASSET PENDING: replace this interim mark with the client's existing green brandmark
-      (brief §01). Keep the SVG inline with aria-hidden — the wordmark text carries the name.
-    -->
-    <svg
-      viewBox="0 0 36 36"
-      class="size-9 shrink-0"
-      aria-hidden="true"
-      focusable="false"
-      data-slot="logo-mark"
-    >
-      <rect width="36" height="36" rx="10" :fill="inverse ? '#FFFFFF' : 'var(--forest)'" />
-      <path
-        d="M8 26c5 0 6-5 10-8s6-3 10-8"
-        fill="none"
-        :stroke="inverse ? 'var(--forest)' : '#FFFFFF'"
-        stroke-width="2.25"
-        stroke-linecap="round"
-      />
-      <circle cx="8" cy="26" r="2.5" :fill="inverse ? 'var(--forest)' : '#FFFFFF'" />
-      <circle cx="28" cy="10" r="2.5" fill="var(--ember)" />
-    </svg>
-    <span
-      :class="
-        cn(
-          'text-[1.3125rem] font-semibold tracking-[-0.02em] transition-colors duration-300 ease-out-soft',
-          inverse ? 'text-white' : 'text-ink',
-        )
+  <span data-slot="logo" :class="cn('inline-flex items-center', props.class)">
+    <!-- The client's wordmark (public/brand/). Default: green "Naija" + orange-red "Path" for light
+         grounds. `inverse`: white "Naija" for photography and dark green surfaces. -->
+    <img
+      :src="
+        props.tone === 'inverse' ? '/brand/naijapath-logo-light.png' : '/brand/naijapath-logo.png'
       "
-    >
-      NaijaPath
-    </span>
+      alt="NaijaPath"
+      width="440"
+      height="92"
+      decoding="async"
+      class="h-6 w-auto select-none sm:h-7"
+      draggable="false"
+    />
   </span>
 </template>
 
 <script setup lang="ts">
-/** v3 wordmark: forest mark + ink name, or white (`inverse`) over photography and forest. */
-import { computed, type HTMLAttributes } from "vue";
+/** The NaijaPath wordmark (client asset, transparent PNG extracted from the supplied file). */
+import type { HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";
 
 const props = withDefaults(
   defineProps<{ tone?: "default" | "inverse"; class?: HTMLAttributes["class"] }>(),
   { tone: "default" },
 );
-const inverse = computed(() => props.tone === "inverse");
 </script>

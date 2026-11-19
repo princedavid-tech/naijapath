@@ -1,27 +1,39 @@
 <template>
-  <!-- §2.1 Header. Fixed; while the page is at the top it sits INSIDE the hero sheet (white
-       logo, frosted nav pill over the photo). Once scrolled it becomes a compact cream bar. -->
+  <!-- §2.1 Header. Fixed; while the page is at the top it sits INSIDE the hero sheet. Once
+       scrolled there is no bar: logo and CTA float, and only the nav pill keeps a see-through
+       frosted background. Colours follow the section underneath (dark or light). -->
   <header
     data-slot="site-header"
-    :data-surface="onPhoto ? 'dark' : undefined"
+    :data-surface="dark ? 'dark' : undefined"
     class="pointer-events-none fixed inset-x-0 top-0 z-40"
   >
     <div
       :class="
         cn(
-          'pointer-events-auto mx-[var(--sheet-inset)] flex items-center gap-2 transition-[margin,height,padding,background-color,box-shadow,border-radius] duration-300 ease-out-soft sm:gap-4',
+          'pointer-events-auto mx-[var(--sheet-inset)] flex items-center gap-2 transition-[margin,height,padding] duration-300 ease-out-soft sm:gap-4',
           onPhoto
-            ? 'mt-[var(--sheet-inset)] h-[5.25rem] rounded-sheet bg-transparent px-3 sm:px-6 lg:px-8'
-            : 'mt-2 h-16 rounded-[1.25rem] bg-cream/95 px-3 shadow-bar sm:px-4 lg:px-5',
+            ? 'mt-[var(--sheet-inset)] h-[5.25rem] px-3 sm:px-6 lg:px-8'
+            : 'mt-2 h-16 px-3 sm:px-4 lg:px-5',
         )
       "
     >
       <NLink
         :to="HOME_ROUTES.home"
-        class="-m-1 inline-flex min-h-11 shrink-0 items-center rounded-lg p-1"
+        :class="
+          cn(
+            'inline-flex min-h-11 shrink-0 items-center rounded-full border transition-[background-color,border-color,padding] duration-300 ease-out-soft',
+            // At the top (over the hero photo): no pill. Scrolled: the logo sits in the same
+            // see-through frosted pill as the navigation, so passing text never tangles with it.
+            onPhoto
+              ? '-ml-1 border-transparent px-1'
+              : dark
+                ? 'h-13 border-white/20 bg-forest-deep/45 px-4 backdrop-blur-md'
+                : 'h-13 border-ink/10 bg-white/60 px-4 shadow-soft backdrop-blur-md',
+          )
+        "
         :aria-label="MICROCOPY.a11y.homeLink"
       >
-        <NLogo :tone="onPhoto ? 'inverse' : 'default'" />
+        <NLogo :tone="dark ? 'inverse' : 'default'" />
       </NLink>
 
       <!-- Centre: frosted pill nav with a sliding white indicator (≥1440px: four links + Sign In). -->
@@ -31,9 +43,9 @@
           :class="
             cn(
               'relative flex items-center rounded-full border p-1 transition-[background-color,border-color] duration-300 ease-out-soft',
-              onPhoto
+              dark
                 ? 'border-white/20 bg-forest-deep/45 backdrop-blur-md'
-                : 'border-transparent bg-ink/[0.05]',
+                : 'border-ink/10 bg-white/60 shadow-soft backdrop-blur-md',
             )
           "
           @mouseleave="hovered = null"
@@ -56,9 +68,9 @@
                     'relative inline-flex h-11 items-center rounded-full px-4 text-[0.9375rem] font-medium whitespace-nowrap transition-colors duration-300 ease-out-soft',
                     highlighted === i
                       ? 'text-ink'
-                      : onPhoto
+                      : dark
                         ? 'text-white'
-                        : 'text-body hover:text-ink',
+                        : 'text-ink/80 hover:text-ink',
                   )
                 "
                 @mouseenter="hovered = i"
@@ -87,9 +99,9 @@
           :class="
             cn(
               'inline-flex size-11 items-center justify-center rounded-full border transition-colors duration-300 ease-out-soft 2xl:hidden',
-              onPhoto
+              dark
                 ? 'border-white/25 bg-forest-deep/45 text-white backdrop-blur-md hover:bg-forest-deep/60'
-                : 'border-hairline bg-sheet text-ink hover:border-ink/25',
+                : 'border-ink/10 bg-white/60 text-ink shadow-soft backdrop-blur-md hover:bg-white/80',
             )
           "
           :aria-label="MICROCOPY.a11y.openMenu"
@@ -109,7 +121,8 @@
 /**
  * §2.1 Header (redesign-v3).
  * - At the top of the page it overlays the hero sheet: white logo, frosted pill nav, orange
- *   "Book a Session". After 24px of scroll it settles into a compact cream bar (300ms).
+ *   "Book a Session". Once scrolled there is no bar: only the nav pill keeps a see-through frost,
+ *   and logo, pill and menu switch light/dark with the section underneath (probeSurface).
  * - The nav pill's white indicator SLIDES to the hovered/focused item, and otherwise rests on the
  *   section currently in view (aria-current="location"); at the very top it fades out.
  * - "Sign In" (locked content) lives at the right end of the pill; below 1440px it is in the menu.
@@ -136,6 +149,9 @@ const ITEMS = [
 
 const scrolled = ref(false);
 const onPhoto = computed(() => !scrolled.value);
+/** Is the section currently under the header dark (hero photo, Commission, footer)? */
+const overDark = ref(true);
+const dark = computed(() => onPhoto.value || overDark.value);
 const menuOpen = ref(false);
 const menuMounted = ref(false);
 
@@ -173,8 +189,25 @@ const indicatorStyle = computed(() => ({
 watch(highlighted, () => measure());
 
 // ── Scroll state + scroll spy ────────────────────────────────────────
+/** Probe the page just beneath the header's centre line and read its surface. */
+function probeSurface() {
+  const header = document.querySelector<HTMLElement>('[data-slot="site-header"]');
+  const y = 40;
+  const hit = document
+    .elementsFromPoint(window.innerWidth / 2, y)
+    .find((el) => !header?.contains(el));
+  overDark.value = !!hit?.closest('[data-surface="dark"]');
+}
+
+let frame = 0;
 const onScroll = () => {
   scrolled.value = window.scrollY > 24;
+  if (!frame) {
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      probeSurface();
+    });
+  }
 };
 
 let spy: IntersectionObserver | undefined;
