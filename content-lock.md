@@ -1,7 +1,9 @@
 # Content lock — NaijaPath homepage
 
 Every piece of text the homepage renders, captured from the live page before the
-`redesign-v3` work. **The redesign may move, re-group or re-style this content, but must not
+`redesign-v3` work. Owner-approved removals since then: the hero's "Session Confirmed" card
+(2026-11-19); the dev-only "Testimonial pending" placeholders (replaced by labelled design samples).
+**The redesign may move, re-group or re-style this content, but must not
 add, remove, shorten or rewrite any of it.**
 
 - Source: the rendered page (http://localhost:3000/) at 1440×900 with reduced motion (animated
@@ -41,12 +43,7 @@ add, remove, shorten or rewrite any of it.**
 - **LINK** Book a Session → `/book-a-session`
 - **TEXT** Book a Session • Book a Session •
 - **SR-ONLY** Illustration of the NaijaPath platform
-- **TEXT** DA
-- **P** Session Confirmed
-- **P** Damilola A. •
-- **TEXT** Today, 4:00 PM
 - **TEXT** NaijaPath
-- **TEXT** Confirmed
 
 ## block-2
 
@@ -195,11 +192,6 @@ add, remove, shorten or rewrite any of it.**
 - **H2** Structured Guidance. Impact you can verify.
 - **P** Every story here came through a structured career guidance process.
 - **ARIA-LABEL** Stories
-- **LI** Testimonial pending
-- **ARIA-LABEL** Rated 0 out of 5
-- **P** Quote to be added once collected from a platform user.
-- **P** Name pending
-- **P** Outcome label pending
 - **LINK** Read More Stories → `/stories`
 - **ARIA-LABEL** Previous story
 - **ARIA-LABEL** Next story
@@ -280,7 +272,6 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
   "aria-label|Next story",
   "aria-label|Platform highlights",
   "aria-label|Previous story",
-  "aria-label|Rated 0 out of 5",
   "aria-label|Rated 4.9 out of 5",
   "aria-label|Stories",
   "aria-label|The five stages",
@@ -359,10 +350,7 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
   "text|Commission structured career guidance for your beneficiaries, staff, or CSR cohorts. Monitor delivery, track outcomes, and report to your funders with verified data.",
   "text|Commissioning quality career services",
   "text|Completed",
-  "text|Confirmed",
   "text|Connect with a verified career practitioner. Book a session, receive structured guidance, and leave with a documented action plan.",
-  "text|DA",
-  "text|Damilola A. •",
   "text|Deliver your expertise through a structured, professional platform.",
   "text|Delivery",
   "text|Delivery Standard",
@@ -390,25 +378,21 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
   "text|NaijaPath",
   "text|NaijaPath at a glance",
   "text|Naijapath gives development organisations, government programmes, and corporate partners a structured platform to deliver career guidance at scale.",
-  "text|Name pending",
   "text|Navigate your career with structured, verified guidance.",
   "text|Network",
   "text|Nigeria's First Digital Career Service Platform",
   "text|Outcome data is compiled and shared with the commissioning organisation or made available to the beneficiary. Every programme is evidence-based.",
-  "text|Outcome label pending",
   "text|Partner Organisations",
   "text|Platform",
   "text|Practitioner:",
   "text|Prepare for a mock interview",
   "text|Programme dashboard",
-  "text|Quote to be added once collected from a platform user.",
   "text|Real-time programme dashboard",
   "text|Reporting",
   "text|Resources",
   "text|Sample data",
   "text|Sample data: sessions completed per week rose from 8 in week 1 to 25 in week 8.",
   "text|Scheduling",
-  "text|Session Confirmed",
   "text|Session record",
   "text|Session-by-session documentation",
   "text|Sessions",
@@ -425,9 +409,7 @@ Used by `--check`. Do not edit by hand; regenerate only when the client approves
   "text|Structured Guidance. Impact you can verify.",
   "text|Structured career guidance for Nigeria and the world.",
   "text|Subscribe",
-  "text|Testimonial pending",
   "text|This is not casual advice. It is professional career guidance, delivered the way it should be.",
-  "text|Today, 4:00 PM",
   "text|Update CV with recent project outcomes",
   "text|Verified Career Practitioners",
   "text|W1",

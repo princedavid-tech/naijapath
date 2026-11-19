@@ -82,8 +82,8 @@ index.ts         barrel — domain only
 ```
 
 Sections (redesign-v3 order): `site-header` (+ `mobile-menu`, lazy) · `hero` ·
-`trust-bar` (§2.3 intro + numbers, + `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`,
-interim `session-confirmed-card`) · `commission` (+ `cohort-dashboard-card`) · `how-it-works` ·
+`trust-bar` (§2.3 intro + numbers, + `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`) ·
+`commission` (+ `cohort-dashboard-card`) · `how-it-works` ·
 `social-proof` (+ `testimonial-card`) · `join` (+ `audience-card`) · `site-footer` (+ `newsletter-form`).
 
 ## Scripts

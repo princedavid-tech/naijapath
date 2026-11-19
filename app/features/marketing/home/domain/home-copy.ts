@@ -42,15 +42,8 @@ export const HERO_COPY = {
     "Every session is professionally delivered, documented, and tracked. Career guidance that is accountable from the first appointment to the last report.",
   ctaPrimary: { label: "Find Career Guidance", to: HOME_ROUTES.findGuidance },
   ctaSecondary: { label: "Commission a Programme", to: HOME_ROUTES.commission },
-  floatingCard: {
-    title: "Session Confirmed",
-    name: "Damilola A.",
-    initials: "DA",
-    dayLabel: "Today",
-    // 4:00 PM Africa/Lagos (WAT, UTC+1). Formatted by date-formatters — never hard-coded.
-    startsAt: "2026-11-17T15:00:00Z",
-    status: "confirmed",
-  },
+  // floatingCard ("Session Confirmed • Damilola A. • Today, 4:00 PM") removed by the owner
+  // on 2026-11-19 (redesign-v3).
   badge1: "100% Funded Seats Available",
   badge2: { score: "4.9 / 5.0", rating: 4.9, text: "98% Recommendation Rate" },
 } as const;
