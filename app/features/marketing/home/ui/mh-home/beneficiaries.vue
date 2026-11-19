@@ -3,7 +3,7 @@
     :id="HOME_SECTION_IDS.forYou"
     tabindex="-1"
     aria-labelledby="for-you-heading"
-    class="bg-base-0 pt-16 pb-12 lg:pt-24 lg:pb-16 defer-render"
+    class="sheet mt-3 bg-sand pt-16 pb-12 defer-render md:mt-4 lg:pt-24 lg:pb-16"
   >
     <NContainer>
       <header class="mx-auto max-w-[44rem] text-center">

@@ -3,7 +3,7 @@
     :id="HOME_SECTION_IDS.howItWorks"
     tabindex="-1"
     aria-labelledby="how-heading"
-    class="bg-base-0 py-16 lg:py-24 defer-render"
+    class="sheet mt-3 bg-mist py-16 defer-render md:mt-4 lg:py-24"
   >
     <NContainer>
       <header class="mx-auto max-w-[46rem] text-center">

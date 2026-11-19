@@ -3,10 +3,8 @@
     :id="HOME_SECTION_IDS.join"
     tabindex="-1"
     aria-labelledby="join-heading"
-    class="relative bg-base-0 defer-render"
+    class="sheet relative mt-3 bg-sage defer-render md:mt-4"
   >
-    <div aria-hidden="true" class="mh-hatch h-7 lg:h-8" />
-
     <NContainer class="py-14 lg:py-20">
       <header class="max-w-[40rem]">
         <MhHomeEyebrow>{{ copy.label }}</MhHomeEyebrow>
@@ -22,8 +20,6 @@
         </li>
       </ul>
     </NContainer>
-
-    <div aria-hidden="true" class="mh-hatch h-7 lg:h-8" />
   </section>
 </template>
 
@@ -42,13 +38,3 @@ const PHOTOS = [
   { src: "/images/hero-session.jpg", position: "object-[55%_75%]" },
 ] as const;
 </script>
-
-<style scoped>
-.mh-hatch {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgb(30 100 40 / 0.14) 0 1.5px,
-    transparent 1.5px 10px
-  );
-}
-</style>

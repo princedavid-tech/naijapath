@@ -39,7 +39,7 @@
           v-for="(v, i) in d.chartValues"
           :key="i"
           :d="barPath(i, v)"
-          fill="#1E6428"
+          fill="var(--forest)"
           :opacity="i === d.chartValues.length - 1 ? 1 : 0.78"
         >
           <title>{{ d.chartWeeks[i] }}: {{ v }}</title>

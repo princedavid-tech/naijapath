@@ -2,7 +2,12 @@
   <!-- §2.3 Intro + numbers (redesign-v3): a white sheet. The hero's subheadline is the title:
        its first sentence set large on the left, its second as the supporting paragraph on the
        right — one <h2>, so the locked sentence stays whole for every reader. -->
-  <NSheet :id="HOME_SECTION_IDS.trust" aria-labelledby="intro-heading" class="mt-3 md:mt-4">
+  <NSheet
+    :id="HOME_SECTION_IDS.trust"
+    tone="sage"
+    aria-labelledby="intro-heading"
+    class="mt-3 md:mt-4"
+  >
     <div class="site-container section-y">
       <h2
         id="intro-heading"

@@ -1,5 +1,5 @@
 <template>
-  <footer data-surface="dark" class="bg-base-900 text-base-0">
+  <footer data-surface="dark" class="sheet mt-3 mb-3 bg-forest-deep text-base-0 md:mt-4 md:mb-4">
     <!-- Join (white, hatched bottom edge) sits directly above. -->
     <NContainer class="pt-14 pb-8 lg:pt-16">
       <!-- Top: brand left, Career Brief right. -->

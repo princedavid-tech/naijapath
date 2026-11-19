@@ -56,7 +56,7 @@
     --base-50: var(--cream);
     --base-100: #f3f2ed;
     --base-150: var(--hairline);
-    --base-500: #66706a; /* 4.6:1 on cream — the old small-text grey, re-tinted */
+    --base-500: var(--body); /* old small-text grey → body: ≥5.9:1 on every tint field */
     --base-600: var(--body);
     --base-900: var(--ink);
     --green-50: #f1f5f1;
@@ -356,6 +356,23 @@
   max-width: calc(75rem + 2 * clamp(1.25rem, 0.8rem + 1.6vw, 2rem));
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
+}
+
+/* v3: subtle film grain for the dark forest field. Sits between the background and the content
+   (isolated stacking context), never over text. */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.18;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 }
 
 /* v3: the ONE photo treatment used on every photograph (black-and-white, gently lifted). */
