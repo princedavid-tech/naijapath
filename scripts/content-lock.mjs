@@ -189,7 +189,7 @@ const flatKey = (i) =>
   `${i.kind === "link" ? "link" : ["alt", "aria-label", "placeholder", "title", "label"].includes(i.kind) ? i.kind : "text"}|${i.text}${i.kind === "link" ? ` → ${i.href}` : ""}`;
 
 function toSet(groups) {
-  return [...new Set(groups.flatMap((g) => g.items.map(flatKey)))].sort();
+  return [...new Set(groups.flatMap((g) => g.items.map(flatKey)))].toSorted();
 }
 
 function render(groups) {

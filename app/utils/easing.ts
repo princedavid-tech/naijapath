@@ -1,5 +1,5 @@
 /**
- * The brand easing, cubic-bezier(0.2, 0.7, 0.2, 1), as a JS function for rAF-driven motion
+ * The brand easing, cubic-bezier(0.22, 1, 0.36, 1) (v3 --ease-out-soft), as a JS function for rAF-driven motion
  * (path draws, count-ups) so JS motion and CSS transitions share one curve.
  */
 function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
@@ -27,7 +27,7 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
   };
 }
 
-export const easeBrand = cubicBezier(0.2, 0.7, 0.2, 1);
+export const easeBrand = cubicBezier(0.22, 1, 0.36, 1); // v3: matches --ease-out-soft
 
 export const MOTION_MS = {
   ui: 200,

@@ -93,20 +93,14 @@ export default defineNuxtConfig({
     },
     families: [
       {
-        name: "Plus Jakarta Sans",
-        provider: "google",
-        weights: [500, 600, 700],
-        // latin only: the latin-ext file (~50 KB) would be fetched solely for the Naira sign in
-        // "₦0". It renders in the system sans instead (Roboto/SF/Segoe all include U+20A6).
-        // Re-add "latin-ext" if the brand wants Jakarta's own ₦ glyph.
-        // Preload the heading weight only (hero H1 is the first text painted).
-        preload: { weights: [700], subsets: ["latin"] },
-      },
-      {
-        name: "Inter",
-        provider: "google",
-        weights: [400, 500],
+        // redesign-v3: one family for display and text (Fontshare, free for commercial use,
+        // self-hosted at build). 500 = headings, 400 = body, 600 = small UI emphasis.
+        name: "General Sans",
+        provider: "fontshare",
+        weights: [400, 500, 600],
         styles: ["normal", "italic"],
+        // Preload the heading weight only (the hero H1 is the first text painted).
+        preload: { weights: [500], styles: ["normal"] },
       },
     ],
   },

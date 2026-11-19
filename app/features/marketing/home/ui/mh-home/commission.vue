@@ -27,6 +27,7 @@
           </NButton>
           <NButton
             :to="copy.ctaSecondary.to"
+            color="primary"
             variant="outline"
             shape="pill"
             size="lg"

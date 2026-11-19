@@ -1,94 +1,111 @@
 import { cva, type VariantProps } from "class-variance-authority";
 
 /**
- * `color` × `variant` are orthogonal: both declared with EMPTY strings, real classes live in
- * `compoundVariants` (ARCHITECTURE.md §4.1).
+ * redesign-v3 buttons: fully round pills, General Sans 500.
  *
- * Every size is ≥ 44px tall (touch-target rule). Hover darkens to the 600 step. No scale-bounce.
+ * `color` × `variant` stay orthogonal (empty base strings, classes in `compoundVariants`,
+ * ARCHITECTURE.md §4.1) and keep their names so call sites read the same:
+ *   accent  → burnt orange (ember): the PRIMARY action pill — main CTAs only
+ *   primary → forest green: secondary emphasis on light surfaces
+ *   light   → white pill with a hairline: the quiet secondary
+ *   inverse → white on dark surfaces (forest panel, hero photo)
+ *
+ * A trailing icon (e.g. the arrow) slides 4px on hover/focus. Every size ≥ 44px tall.
  * Contrast for every pair is in scripts/contrast.mjs.
  */
 export const buttonVariants = cva(
   [
-    "relative inline-flex shrink-0 items-center justify-center gap-2 border-2",
+    "group/button relative inline-flex shrink-0 items-center justify-center gap-2.5 rounded-full border",
     // Labels may wrap on narrow phones (no overflow at 320px); single line from 640px.
-    "text-center font-heading font-semibold text-base leading-tight select-none sm:whitespace-nowrap",
-    "transition-[background-color,border-color,color,box-shadow] duration-200 ease-brand",
-    "disabled:pointer-events-none disabled:border-base-150 disabled:bg-base-150 disabled:text-base-500",
-    "aria-disabled:pointer-events-none aria-disabled:border-base-150 aria-disabled:bg-base-150 aria-disabled:text-base-500",
+    "text-center font-sans text-[0.9375rem] font-medium leading-tight tracking-[-0.005em] select-none sm:whitespace-nowrap",
+    "transition-[background-color,border-color,color,box-shadow,transform] duration-200 ease-out-soft",
+    "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
     "[&_svg]:shrink-0",
+    "[&>[data-slot=icon]:last-child:not(:first-child)]:transition-transform [&>[data-slot=icon]:last-child:not(:first-child)]:duration-200 [&>[data-slot=icon]:last-child:not(:first-child)]:ease-out-soft",
+    "hover:[&>[data-slot=icon]:last-child:not(:first-child)]:translate-x-1 focus-visible:[&>[data-slot=icon]:last-child:not(:first-child)]:translate-x-1",
   ],
   {
     variants: {
-      // Guidelines: accent (orange) = primary CTA; primary outline (2px green) = secondary.
-      color: { primary: "", accent: "", inverse: "" },
+      color: { primary: "", accent: "", inverse: "", light: "" },
       variant: { solid: "", outline: "", ghost: "" },
       size: {
-        default: "min-h-11 px-5 py-2.5",
-        lg: "min-h-12 px-6 py-3",
-        icon: "size-11 p-0",
+        sm: "min-h-11 px-5 py-2",
+        default: "min-h-12 px-6 py-2.5",
+        lg: "min-h-14 px-7 py-3 text-base",
+        icon: "size-12 p-0",
       },
-      shape: {
-        default: "rounded-sm",
-        // Pill (24px+): the final layout's CTA shape, used site-wide.
-        pill: "rounded-full",
-      },
+      // Kept for API compatibility; every button is a pill in v3.
+      shape: { default: "", pill: "" },
     },
     compoundVariants: [
-      // primary — green
+      // accent — ember (primary action)
+      {
+        color: "accent",
+        variant: "solid",
+        class: "border-ember bg-ember text-white hover:border-ember-deep hover:bg-ember-deep",
+      },
+      {
+        color: "accent",
+        variant: "outline",
+        class: "border-ember bg-transparent text-ember hover:bg-ember hover:text-white",
+      },
+      {
+        color: "accent",
+        variant: "ghost",
+        class: "border-transparent bg-transparent text-ember hover:text-ember-deep",
+      },
+      // primary — forest
       {
         color: "primary",
         variant: "solid",
-        class:
-          "border-green-500 bg-green-500 text-base-0 hover:border-green-600 hover:bg-green-600",
+        class: "border-forest bg-forest text-white hover:border-forest-deep hover:bg-forest-deep",
       },
       {
         color: "primary",
         variant: "outline",
         class:
-          "border-green-500 bg-transparent text-green-500 hover:border-green-600 hover:bg-green-100 hover:text-green-600",
+          "border-forest/35 bg-transparent text-forest hover:border-forest hover:bg-forest hover:text-white",
       },
       {
         color: "primary",
         variant: "ghost",
-        class:
-          "border-transparent bg-transparent text-green-500 hover:bg-green-50 hover:text-green-600",
+        class: "border-transparent bg-transparent text-forest hover:bg-sage",
       },
-      // accent — terracotta (primary CTA on dark surfaces, Subscribe)
+      // light — quiet white pill
       {
-        color: "accent",
+        color: "light",
         variant: "solid",
-        class:
-          "border-terracotta-500 bg-terracotta-500 text-base-0 hover:border-terracotta-600 hover:bg-terracotta-600",
+        class: "border-hairline bg-sheet text-ink hover:border-ink/25",
       },
       {
-        color: "accent",
+        color: "light",
         variant: "outline",
-        class:
-          "border-terracotta-500 bg-transparent text-terracotta-500 hover:border-terracotta-600 hover:text-terracotta-600",
+        class: "border-ink/20 bg-transparent text-ink hover:border-ink hover:bg-sheet",
       },
       {
-        color: "accent",
+        color: "light",
         variant: "ghost",
-        class: "border-transparent bg-transparent text-terracotta-500 hover:text-terracotta-600",
+        class: "border-transparent bg-transparent text-ink hover:bg-ink/5",
       },
-      // inverse — white, for dark green surfaces
+      // inverse — on dark surfaces and photography
       {
         color: "inverse",
         variant: "solid",
-        class: "border-base-0 bg-base-0 text-green-600 hover:border-green-150 hover:bg-green-150",
+        class: "border-white bg-white text-ink hover:border-sage hover:bg-sage",
       },
       {
         color: "inverse",
         variant: "outline",
-        class: "border-base-0 bg-transparent text-base-0 hover:bg-base-0 hover:text-green-600",
+        class:
+          "border-white/55 bg-transparent text-white hover:border-white hover:bg-white hover:text-ink",
       },
       {
         color: "inverse",
         variant: "ghost",
-        class: "border-transparent bg-transparent text-base-0 hover:bg-base-0/10",
+        class: "border-transparent bg-transparent text-white hover:bg-white/10",
       },
     ],
-    defaultVariants: { color: "primary", variant: "solid", size: "default", shape: "default" },
+    defaultVariants: { color: "accent", variant: "solid", size: "default", shape: "default" },
   },
 );
 

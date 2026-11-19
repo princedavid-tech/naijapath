@@ -9,10 +9,25 @@ import { extendTailwindMerge } from "tailwind-merge";
 const twMerge = extendTailwindMerge({
   extend: {
     theme: {
-      text: ["hero", "display", "h2", "h3", "lead", "label", "stat", "stage"],
-      shadow: ["card", "card-hover"],
-      radius: ["sm", "lg", "xl"],
-      ease: ["brand"],
+      text: [
+        "hero-v",
+        "title",
+        "subtitle",
+        "figure",
+        "copy",
+        "eyebrow",
+        "hero",
+        "display",
+        "h2",
+        "h3",
+        "lead",
+        "label",
+        "stat",
+        "stage",
+      ],
+      shadow: ["soft", "lift", "bar", "card", "card-hover"],
+      radius: ["sm", "lg", "xl", "card", "sheet"],
+      ease: ["out-soft", "brand"],
     },
   },
 });

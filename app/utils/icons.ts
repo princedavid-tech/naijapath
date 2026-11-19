@@ -1,88 +1,116 @@
 /**
- * Semantic icon names → Phosphor glyphs (ARCHITECTURE.md §5.2).
- * Templates say `<NIcon name="practitioners" />`, never a Phosphor import. Swapping a glyph is one
+ * Semantic icon names → line-art glyphs (ARCHITECTURE.md §5.2).
+ * Templates say `<NIcon name="practitioners" />`, never a library import. Swapping a glyph is one
  * line here.
  *
- * Only the weights actually used are imported (raw SVG from @phosphor-icons/core) — the Vue
- * components ship all six weights per icon, which cost ~19 KB gz in the initial bundle.
- * Need another weight? Import `@phosphor-icons/core/<weight>/<name>-<weight>.svg?raw` and add it.
+ * redesign-v3: every glyph is a true stroke drawing on Lucide's 24px grid (lucide-static, ISC),
+ * so one stroke weight runs through the whole site, from 16px UI marks to 96px illustrations.
+ * Brand logos (LinkedIn, X, YouTube) are not in Lucide; they are authored below on the same grid
+ * in the same stroke grammar.
  */
-import usersThree from "@phosphor-icons/core/regular/users-three.svg?raw";
-import lockSimple from "@phosphor-icons/core/regular/lock-simple.svg?raw";
-import listChecks from "@phosphor-icons/core/regular/list-checks.svg?raw";
-import handshake from "@phosphor-icons/core/regular/handshake.svg?raw";
-import sealCheck from "@phosphor-icons/core/regular/seal-check.svg?raw";
-import fileText from "@phosphor-icons/core/regular/file-text.svg?raw";
-import chartLineUp from "@phosphor-icons/core/regular/chart-line-up.svg?raw";
-import clipboardText from "@phosphor-icons/core/regular/clipboard-text.svg?raw";
-import userCircle from "@phosphor-icons/core/regular/user-circle.svg?raw";
-import identificationBadge from "@phosphor-icons/core/regular/identification-badge.svg?raw";
-import buildings from "@phosphor-icons/core/regular/buildings.svg?raw";
-import arrowRightBold from "@phosphor-icons/core/bold/arrow-right-bold.svg?raw";
-import checkBold from "@phosphor-icons/core/bold/check-bold.svg?raw";
-import checkCircleFill from "@phosphor-icons/core/fill/check-circle-fill.svg?raw";
-import calendarCheck from "@phosphor-icons/core/regular/calendar-check.svg?raw";
-import downloadSimple from "@phosphor-icons/core/regular/download-simple.svg?raw";
-import list from "@phosphor-icons/core/regular/list.svg?raw";
-import xIcon from "@phosphor-icons/core/regular/x.svg?raw";
-import star from "@phosphor-icons/core/regular/star.svg?raw";
-import starFill from "@phosphor-icons/core/fill/star-fill.svg?raw";
-import warningCircleBold from "@phosphor-icons/core/bold/warning-circle-bold.svg?raw";
-import linkedinLogo from "@phosphor-icons/core/regular/linkedin-logo.svg?raw";
-import xLogo from "@phosphor-icons/core/regular/x-logo.svg?raw";
-import youtubeLogo from "@phosphor-icons/core/regular/youtube-logo.svg?raw";
-import mapPin from "@phosphor-icons/core/regular/map-pin.svg?raw";
-import pauseFill from "@phosphor-icons/core/fill/pause-fill.svg?raw";
-import playFill from "@phosphor-icons/core/fill/play-fill.svg?raw";
+import arrowLeft from "lucide-static/icons/arrow-left.svg?raw";
+import arrowRight from "lucide-static/icons/arrow-right.svg?raw";
+import arrowUpRight from "lucide-static/icons/arrow-up-right.svg?raw";
+import badgeCheck from "lucide-static/icons/badge-check.svg?raw";
+import building2 from "lucide-static/icons/building-2.svg?raw";
+import calendarCheck from "lucide-static/icons/calendar-check.svg?raw";
+import chartColumn from "lucide-static/icons/chart-no-axes-column.svg?raw";
+import check from "lucide-static/icons/check.svg?raw";
+import chevronLeft from "lucide-static/icons/chevron-left.svg?raw";
+import chevronRight from "lucide-static/icons/chevron-right.svg?raw";
+import circleAlert from "lucide-static/icons/circle-alert.svg?raw";
+import circleCheck from "lucide-static/icons/circle-check.svg?raw";
+import clipboardCheck from "lucide-static/icons/clipboard-check.svg?raw";
+import download from "lucide-static/icons/download.svg?raw";
+import fileText from "lucide-static/icons/file-text.svg?raw";
+import handshake from "lucide-static/icons/handshake.svg?raw";
+import idCard from "lucide-static/icons/id-card.svg?raw";
+import listChecks from "lucide-static/icons/list-checks.svg?raw";
+import lock from "lucide-static/icons/lock.svg?raw";
+import mapPin from "lucide-static/icons/map-pin.svg?raw";
+import menu from "lucide-static/icons/menu.svg?raw";
+import pause from "lucide-static/icons/pause.svg?raw";
+import play from "lucide-static/icons/play.svg?raw";
+import quote from "lucide-static/icons/quote.svg?raw";
+import star from "lucide-static/icons/star.svg?raw";
+import userRound from "lucide-static/icons/user-round.svg?raw";
+import users from "lucide-static/icons/users.svg?raw";
+import x from "lucide-static/icons/x.svg?raw";
 
-export type IconWeight = "regular" | "bold" | "fill";
-type IconSet = Partial<Record<IconWeight, string>>;
+/** Lucide file → inner shapes only, each with pathLength="1" so CSS can stroke-draw it. */
+function inner(raw: string): string {
+  return raw
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/^[\s\S]*?<svg[^>]*>/, "")
+    .replace(/<\/svg>\s*$/, "")
+    .replace(/<(path|circle|rect|line|polyline|polygon|ellipse)\b/g, '<$1 pathLength="1"')
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-/** Keep only the inner markup; NIcon renders its own <svg> wrapper. */
-const inner = (raw: string) => raw.replace(/^\s*<svg[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+/** Authored brand marks: same 24px grid, same stroke grammar as Lucide. */
+const brand = (shapes: string) => inner(`<svg>${shapes}</svg>`);
+const linkedin = brand(
+  '<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10.5v6"/><path d="M8 7.5v.01"/><path d="M12 16.5v-6"/><path d="M12 13a2.75 2.75 0 0 1 5.5 0v3.5"/>',
+);
+const xLogo = brand(
+  '<path d="M4.5 4h4.2l10.8 16h-4.2z"/><path d="M19.5 4l-6.4 7.1"/><path d="M4.5 20l6.4-7.1"/>',
+);
+const youtube = brand(
+  '<rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.25 9.5 14.5 12l-4.25 2.5z"/>',
+);
 
 export const ICONS = {
-  // Trust bar
-  practitioners: { regular: inner(usersThree) },
-  "zero-barrier": { regular: inner(lockSimple) },
-  "delivery-standard": { regular: inner(listChecks) },
-  partners: { regular: inner(handshake) },
+  // Trust figures
+  practitioners: inner(users),
+  "zero-barrier": inner(lock),
+  "delivery-standard": inner(listChecks),
+  partners: inner(handshake),
 
   // Commission features
-  vetted: { regular: inner(sealCheck) },
-  documentation: { regular: inner(fileText) },
-  dashboard: { regular: inner(chartLineUp) },
-  "audit-report": { regular: inner(clipboardText) },
+  vetted: inner(badgeCheck),
+  documentation: inner(fileText),
+  dashboard: inner(chartColumn),
+  "audit-report": inner(clipboardCheck),
 
-  // Audience doors
-  beneficiary: { regular: inner(userCircle) },
-  practitioner: { regular: inner(identificationBadge) },
-  organisation: { regular: inner(buildings) },
+  // Audience doors (shown large as line-art illustrations)
+  beneficiary: inner(userRound),
+  practitioner: inner(idCard),
+  organisation: inner(building2),
 
   // UI
-  "arrow-right": { bold: inner(arrowRightBold) },
-  check: { bold: inner(checkBold) },
-  "check-circle": { fill: inner(checkCircleFill) },
-  "calendar-check": { regular: inner(calendarCheck) },
-  download: { regular: inner(downloadSimple) },
-  menu: { regular: inner(list) },
-  close: { regular: inner(xIcon) },
-  star: { regular: inner(star), fill: inner(starFill) },
-  error: { bold: inner(warningCircleBold) },
-  "map-pin": { regular: inner(mapPin) },
-  pause: { fill: inner(pauseFill) },
-  play: { fill: inner(playFill) },
+  "arrow-right": inner(arrowRight),
+  "arrow-left": inner(arrowLeft),
+  "arrow-up-right": inner(arrowUpRight),
+  "chevron-left": inner(chevronLeft),
+  "chevron-right": inner(chevronRight),
+  check: inner(check),
+  "check-circle": inner(circleCheck),
+  "calendar-check": inner(calendarCheck),
+  download: inner(download),
+  menu: inner(menu),
+  close: inner(x),
+  star: inner(star),
+  quote: inner(quote),
+  error: inner(circleAlert),
+  "map-pin": inner(mapPin),
+  pause: inner(pause),
+  play: inner(play),
 
   // Social
-  linkedin: { regular: inner(linkedinLogo) },
-  x: { regular: inner(xLogo) },
-  youtube: { regular: inner(youtubeLogo) },
-} as const satisfies Record<string, IconSet>;
+  linkedin,
+  x: xLogo,
+  youtube,
+} as const satisfies Record<string, string>;
 
 export type IconName = keyof typeof ICONS;
 
-/** The requested weight, else whichever weight this icon ships with. */
-export function resolveIcon(name: IconName, weight: IconWeight = "regular"): string {
-  const set: IconSet = ICONS[name];
-  return set[weight] ?? set.regular ?? set.bold ?? set.fill ?? "";
+/**
+ * Legacy weight names, kept so existing call sites read the same:
+ * regular = the house stroke, bold = heavier stroke (small UI marks), fill = solid shape.
+ */
+export type IconWeight = "regular" | "bold" | "fill";
+
+export function resolveIcon(name: IconName): string {
+  return ICONS[name];
 }

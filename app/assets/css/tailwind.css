@@ -1,39 +1,36 @@
 /*
- * NaijaPath design tokens — the design system's single source of truth.
+ * NaijaPath design tokens (redesign-v3) — the design system's single source of truth.
  * Pattern from ARCHITECTURE.md §2: raw hex in :root (@layer base) → mapped in @theme inline.
  *
  * `--color-*: initial` wipes Tailwind's stock palette. `bg-violet-500` etc. render NOTHING.
  * If an element is invisible, check that its colour exists below before anything else.
  *
- * Breakpoints are defined ONCE, here. (No Vuetify → no second or third copy.)
- * nuxt.config.ts `image.screens` mirrors these pixel values for responsive image sizes.
+ * Breakpoints are defined ONCE, here. nuxt.config.ts `image.screens` mirrors them.
  */
 @import "tailwindcss";
 
 @layer base {
   :root {
-    /* ── base (neutrals) ─────────────────────────────────────────── */
-    --base-0: #ffffff;
-    --base-50: #f9f7f4; /* warm white */
-    --base-100: #f3f4f6; /* light grey — input fill, alt rows */
-    --base-150: #e5e7eb; /* card border, hairlines */
-    --base-500: #6b7280; /* supporting text — the lightest grey allowed for text on white */
-    --base-600: #374151; /* body text */
-    --base-900: #1a1a1a; /* near-black headings — never pure #000 */
+    /* ── v3 palette: surfaces ──────────────────────────────────────── */
+    --cream: #faf8f2; /* page ground: the warm desk every sheet sits on */
+    --sheet: #ffffff; /* inset panels ("sheets") */
+    --hairline: #eceae3; /* 1px card borders and dividers */
 
-    /* ── green (brand) ───────────────────────────────────────────── */
-    --green-50: #f0f7f2; /* mint section background */
-    --green-100: #e8f5ea; /* Light Green Tint (guidelines): highlighted cards, tinted bands */
-    --green-150: #cfe3d6;
-    --green-500: #1e6428; /* Naijapath Green (guidelines): nav bar, hero, links, icons, focus */
-    --green-600: #1b3a2d; /* hover/pressed step of green-500 only — not a surface colour */
+    /* ── v3 palette: brand ─────────────────────────────────────────── */
+    --forest: #1f5c2c; /* primary: dark panels, heading accents, icons, eyebrows */
+    --forest-deep: #0f2a17; /* hero gradient foot, pressed states on forest */
+    --ember: #b84a1f; /* action: primary CTA pills ONLY */
+    --ember-deep: #9e3e18; /* ember hover */
 
-    /* ── terracotta (replaces guideline orange #D24B00, which fails AA for 16px white) ── */
-    --terracotta-50: #fdf0ea; /* Light Orange Tint (guidelines) */
-    --terracotta-100: #f3d9ce;
-    --terracotta-150: #e7bba8;
-    --terracotta-500: #b5451b;
-    --terracotta-600: #963614;
+    /* ── v3 palette: soft tints (whole fields, never accents) ─────── */
+    --sage: #e4ede4;
+    --sand: #f3e7da;
+    --mist: #e9e8f4;
+
+    /* ── v3 palette: text ──────────────────────────────────────────── */
+    --ink: #16211b; /* headings */
+    --body: #4f5a54; /* body copy and small supporting text */
+    --muted: #8a938e; /* LARGE text (≥24px) on WHITE sheets only (3.16:1); never on cream (2.98:1) or tints */
 
     /* ── functional (status only — always paired with a text label) ── */
     --success-50: #f0fdf4;
@@ -49,22 +46,46 @@
     --info-50: #eff6ff;
     --info-150: #bfdbfe;
     --info-500: #1d4ed8;
+    --amber-500: #d97706; /* rating stars only */
 
-    /* ── amber (rating stars only) ─────────────────────────────────── */
-    --amber-500: #d97706;
+    /* ── LEGACY ALIASES (transition only) ──────────────────────────────
+       Sections not yet rebuilt still use the old ramp names. They are remapped onto the v3
+       brand values so those sections stay readable meanwhile. Delete this block once the last
+       section is rebuilt (tracked in AGENTS.md). Do not use these names in new work. */
+    --base-0: #ffffff;
+    --base-50: var(--cream);
+    --base-100: #f3f2ed;
+    --base-150: var(--hairline);
+    --base-500: #66706a; /* 4.6:1 on cream — the old small-text grey, re-tinted */
+    --base-600: var(--body);
+    --base-900: var(--ink);
+    --green-50: #f1f5f1;
+    --green-100: var(--sage);
+    --green-150: #c9dcc9;
+    --green-500: var(--forest);
+    --green-600: var(--forest-deep);
+    --terracotta-50: var(--sand);
+    --terracotta-100: #ecd6c3;
+    --terracotta-150: #e2bba3;
+    --terracotta-500: var(--ember);
+    --terracotta-600: var(--ember-deep);
 
-    /* ── shape & depth ─────────────────────────────────────────────── */
-    --radius: 12px;
+    /* ── shape ─────────────────────────────────────────────────────── */
+    --radius: 12px; /* legacy scale root (rounded-sm/lg/xl) */
+    --radius-sheet-v: 28px;
+    --radius-card-v: 24px;
+    --sheet-inset: clamp(0.75rem, 0.55rem + 0.5vw, 1rem); /* 12px → 16px page margin */
 
     /* ── motion ────────────────────────────────────────────────────── */
-    --ease-brand: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1); /* v3: every hover and reveal */
+    --ease-brand: var(--ease-out-soft);
     --dur-ui: 200ms;
-    --dur-reveal: 400ms;
+    --dur-reveal: 800ms;
     --dur-path: 1400ms;
 
     /* ── layout ────────────────────────────────────────────────────── */
-    --header-h: 4.5rem; /* 72px sticky header — used by scroll-padding for anchor jumps */
-    --focus-ring: var(--green-500);
+    --header-h: 4.5rem;
+    --focus-ring: var(--forest);
   }
 }
 
@@ -73,26 +94,21 @@
   --color-*: initial;
   --color-transparent: transparent;
   --color-current: currentColor;
+  --color-white: #ffffff;
 
-  --color-base-0: var(--base-0);
-  --color-base-50: var(--base-50);
-  --color-base-100: var(--base-100);
-  --color-base-150: var(--base-150);
-  --color-base-500: var(--base-500);
-  --color-base-600: var(--base-600);
-  --color-base-900: var(--base-900);
-
-  --color-green-50: var(--green-50);
-  --color-green-100: var(--green-100);
-  --color-green-150: var(--green-150);
-  --color-green-500: var(--green-500);
-  --color-green-600: var(--green-600);
-
-  --color-terracotta-50: var(--terracotta-50);
-  --color-terracotta-100: var(--terracotta-100);
-  --color-terracotta-150: var(--terracotta-150);
-  --color-terracotta-500: var(--terracotta-500);
-  --color-terracotta-600: var(--terracotta-600);
+  --color-cream: var(--cream);
+  --color-sheet: var(--sheet);
+  --color-hairline: var(--hairline);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-ember: var(--ember);
+  --color-ember-deep: var(--ember-deep);
+  --color-sage: var(--sage);
+  --color-sand: var(--sand);
+  --color-mist: var(--mist);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
 
   --color-success-50: var(--success-50);
   --color-success-150: var(--success-150);
@@ -107,8 +123,26 @@
   --color-info-50: var(--info-50);
   --color-info-150: var(--info-150);
   --color-info-500: var(--info-500);
-
   --color-amber-500: var(--amber-500);
+
+  /* Legacy ramp names (transition only — see :root). */
+  --color-base-0: var(--base-0);
+  --color-base-50: var(--base-50);
+  --color-base-100: var(--base-100);
+  --color-base-150: var(--base-150);
+  --color-base-500: var(--base-500);
+  --color-base-600: var(--base-600);
+  --color-base-900: var(--base-900);
+  --color-green-50: var(--green-50);
+  --color-green-100: var(--green-100);
+  --color-green-150: var(--green-150);
+  --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+  --color-terracotta-50: var(--terracotta-50);
+  --color-terracotta-100: var(--terracotta-100);
+  --color-terracotta-150: var(--terracotta-150);
+  --color-terracotta-500: var(--terracotta-500);
+  --color-terracotta-600: var(--terracotta-600);
 
   /* Breakpoint reset: defined once, here. */
   --breakpoint-*: initial;
@@ -121,49 +155,73 @@
 
   --spacing: 0.25rem;
 
-  /* Radius: derived from one value. */
   --radius-*: initial;
-  --radius-sm: calc(var(--radius) - 4px); /* 8px — buttons, inputs */
-  --radius-lg: var(--radius); /* 12px — cards, photos */
-  --radius-xl: calc(var(--radius) + 4px); /* 16px — large feature surfaces */
+  --radius-sm: calc(var(--radius) - 4px); /* 8px */
+  --radius-lg: var(--radius); /* 12px */
+  --radius-xl: calc(var(--radius) + 4px); /* 16px */
+  --radius-card: var(--radius-card-v); /* 24px — v3 cards and photos */
+  --radius-sheet: var(--radius-sheet-v); /* 28px — v3 inset panels */
 
-  /* Shadows: exactly two. */
   --shadow-*: initial;
-  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.08);
-  --shadow-card-hover: 0 4px 16px rgb(0 0 0 / 0.12);
+  --shadow-soft: 0 8px 30px rgb(22 33 27 / 0.04); /* v3: the only resting shadow */
+  --shadow-lift: 0 14px 40px rgb(22 33 27 / 0.08); /* v3: hover lift */
+  --shadow-bar: 0 6px 24px rgb(22 33 27 / 0.06); /* v3: compact scrolled header */
+  --shadow-card: 0 2px 8px rgb(0 0 0 / 0.08); /* legacy */
+  --shadow-card-hover: 0 4px 16px rgb(0 0 0 / 0.12); /* legacy */
 
-  /* Typefaces (self-hosted by @nuxt/fonts with metric-adjusted fallbacks). */
+  /* One family (General Sans, Fontshare) for display and text. */
   --font-*: initial;
-  --font-heading:
-    "Plus Jakarta Sans", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans:
+    "General Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-sans); /* legacy alias */
+  --font-body: var(--font-sans); /* legacy alias */
 
-  /* Fluid type scale. Hero: 32px at 320 → 48px at ≥1280 (desktop), where the H1 is given the
-     column + gutter width so it sets on exactly two lines (brief §02). */
+  /* ── v3 type scale ─────────────────────────────────────────────── */
+  --text-hero-v: clamp(2.25rem, 1.5rem + 3.2vw, 4.5rem); /* 36px @390 → 70–72px desktop */
+  --text-hero-v--line-height: 1.04;
+  --text-hero-v--letter-spacing: -0.02em;
+  --text-title: clamp(2rem, 1.55rem + 1.85vw, 3rem); /* 32px → 48px */
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.02em;
+  --text-subtitle: clamp(1.375rem, 1.25rem + 0.5vw, 1.75rem); /* 22px → 28px card titles */
+  --text-subtitle--line-height: 1.2;
+  --text-subtitle--letter-spacing: -0.015em;
+  --text-figure: clamp(2.75rem, 2rem + 3vw, 4.5rem); /* stats */
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.03em;
+  --text-copy: 1.0625rem; /* 17px body */
+  --text-copy--line-height: 1.6;
+  --text-eyebrow: 0.75rem; /* 12px */
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.08em;
+
+  /* ── legacy type scale (sections not yet rebuilt) ─────────────── */
   --text-hero: clamp(2rem, 1.6rem + 1.75vw, 3rem);
   --text-hero--line-height: 1.08;
   --text-hero--letter-spacing: -0.02em;
-  /* Large, medium-weight section headings (editorial layout): 32px → 52px. */
   --text-display: clamp(2rem, 1.4rem + 2vw, 3.25rem);
   --text-display--line-height: 1.12;
   --text-display--letter-spacing: -0.02em;
-  --text-h2: clamp(1.75rem, 1.5rem + 0.6vw, 2rem); /* 28–32px */
+  --text-h2: clamp(1.75rem, 1.5rem + 0.6vw, 2rem);
   --text-h2--line-height: 1.2;
   --text-h2--letter-spacing: -0.01em;
-  --text-h3: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem); /* 20–24px */
+  --text-h3: clamp(1.25rem, 1.15rem + 0.35vw, 1.5rem);
   --text-h3--line-height: 1.3;
-  --text-lead: 1.125rem; /* 18px */
+  --text-lead: 1.125rem;
   --text-lead--line-height: 1.6;
-  --text-label: 0.8125rem; /* 13px — small-caps section labels */
+  --text-label: 0.8125rem;
   --text-label--line-height: 1.2;
   --text-stat: clamp(2rem, 1.7rem + 1vw, 2.5rem);
   --text-stat--line-height: 1;
   --text-stage: clamp(3rem, 2.5rem + 1.6vw, 4rem);
   --text-stage--line-height: 1;
 
-  --container-page: 80rem; /* 1280px */
+  --container-site: 75rem; /* 1200px — v3 */
+  --container-page: 80rem; /* legacy */
   --container-prose: 68ch;
+  --container-measure: 62ch; /* v3 body measure */
 
+  --ease-out-soft: var(--ease-out-soft);
   --ease-brand: var(--ease-brand);
 }
 
@@ -172,32 +230,50 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    color-scheme: light; /* No dark mode — by design. */
+    color-scheme: light;
+    background-color: var(--cream);
+    /* Themed browser surfaces: scrollbar, caret, underline offset. */
+    scrollbar-color: color-mix(in oklab, var(--forest) 45%, var(--cream)) var(--cream);
+    caret-color: var(--forest);
+    text-underline-offset: 0.2em;
   }
 
-  /* Anchor jumps (native, scrollIntoView and Nuxt's router all honour scroll-margin) land
-     below the sticky header instead of under it. */
+  /* Anchor jumps land below the sticky header (native, scrollIntoView, router and Lenis). */
   [id] {
     scroll-margin-top: var(--header-h);
   }
 
-  /* Smooth in-page scrolling, only for people who have not asked for reduced motion. */
+  /* Native smooth scrolling only when Lenis is NOT driving the page and motion is allowed. */
   @media (prefers-reduced-motion: no-preference) {
-    html {
+    html:not(.lenis) {
       scroll-behavior: smooth;
     }
   }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
+  }
 
   body {
-    background-color: var(--base-0);
-    color: var(--base-600);
-    font-family: var(--font-body);
+    background-color: var(--cream);
+    color: var(--body);
+    font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.6;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01" 0;
     overflow-x: clip; /* belt-and-braces: no horizontal scroll at 320px */
   }
 
@@ -205,13 +281,11 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-heading);
-    color: var(--base-900);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--ink);
     text-wrap: balance;
   }
-
-  /* No global `text-wrap: pretty` on paragraphs: it re-runs line breaking for every <p> and
-     measured ~0.3s of extra style/layout on a throttled mobile CPU. Headings keep `balance`. */
 
   img,
   svg,
@@ -226,21 +300,20 @@
   }
 
   ::selection {
-    background-color: var(--green-150);
-    color: var(--base-900);
+    background-color: var(--sage);
+    color: var(--ink);
   }
 
-  /* Focus: 2px solid green, 2px offset. Dark surfaces flip the ring to white. Never removed. */
+  /* Focus: 2px solid forest, 2px offset. Dark surfaces flip the ring to white. Never removed. */
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   [data-surface="dark"] {
-    --focus-ring: var(--base-0);
+    --focus-ring: #ffffff;
   }
 
-  /* Sections that are skip/anchor targets receive programmatic focus without a ring flash. */
   [tabindex="-1"]:focus:not(:focus-visible) {
     outline: none;
   }
@@ -264,9 +337,33 @@
   font-feature-settings: "tnum" 1;
 }
 
-/* Below-the-fold sections: the browser skips style/layout/paint until they approach the
-   viewport (cuts first-frame work on slow phones). Content stays in the accessibility tree,
-   find-in-page and anchor navigation. `auto` remembers the real size once rendered. */
+/* v3: an inset "sheet" — the panel language of the whole site. Sits on the cream ground with a
+   12–16px page margin and a 28px radius. Pair with a tone class (bg-sheet, bg-forest, bg-sage…). */
+@utility sheet {
+  margin-inline: var(--sheet-inset);
+  border-radius: var(--radius-sheet-v);
+  overflow: clip;
+}
+
+/* v3: vertical rhythm between sections: 72px on phones → ~124px on wide desktops. */
+@utility section-y {
+  padding-block: clamp(4.5rem, 2.25rem + 6.1vw, 8.5rem);
+}
+
+/* v3: the 1200px container with 20–32px side gutters. */
+@utility site-container {
+  width: 100%;
+  max-width: calc(75rem + 2 * clamp(1.25rem, 0.8rem + 1.6vw, 2rem));
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
+}
+
+@utility measure {
+  max-width: 62ch;
+}
+
+/* Below-the-fold sections: skip style/layout/paint until they approach the viewport.
+   Light sections only (see AGENTS.md: axe misreads skipped dark backgrounds). */
 @utility defer-render {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
@@ -276,27 +373,51 @@
   max-width: 68ch;
 }
 
-/* Text link with a moving underline (hover/focus), used for in-copy and card CTAs. */
+/* Text link with a moving underline (hover/focus). */
 @utility link-underline {
   background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1.5px;
+  background-size: 0% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size var(--dur-ui) var(--ease-brand);
+  transition: background-size 300ms var(--ease-out-soft);
   &:hover,
   &:focus-visible {
-    background-size: 100% 1.5px;
+    background-size: 100% 1px;
   }
 }
 
-/* Reveal primitive — toggled once by the useReveal composable. Hidden state only applies with JS. */
+/* ── Line-art stroke draw ─────────────────────────────────────────────
+   NIcon `draw` gives every shape pathLength=1. The drawing redraws when its host (any ancestor
+   with data-draw-host) is hovered or focused, or once when a host gets data-drawn="in".
+   Reduced motion: the global rule above collapses the animation to its final, fully drawn frame. */
+[data-draw] > * {
+  stroke-dasharray: 1 1;
+}
+[data-draw-host]:is(:hover, :focus-within) [data-draw] > *,
+[data-draw-host][data-drawn="in"] [data-draw] > * {
+  animation: icon-draw 1100ms var(--ease-out-soft) both;
+}
+[data-draw-host]:is(:hover, :focus-within) [data-draw] > :nth-child(2n),
+[data-draw-host][data-drawn="in"] [data-draw] > :nth-child(2n) {
+  animation-delay: 90ms;
+}
+@keyframes icon-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Legacy one-shot reveal (sections not yet rebuilt). v3 sections use the motion composables. */
 @utility reveal {
   .js &:not([data-revealed="true"]) {
     opacity: 0;
     transform: translateY(8px);
   }
   transition:
-    opacity var(--dur-reveal) var(--ease-brand),
-    transform var(--dur-reveal) var(--ease-brand);
+    opacity 400ms var(--ease-brand),
+    transform 400ms var(--ease-brand);
   transition-delay: var(--reveal-delay, 0ms);
 }

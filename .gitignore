@@ -28,3 +28,9 @@ logs
 # Editor
 .vscode/*
 !.vscode/extensions.json
+
+# Impeccable: runtime captures and machine-local settings (surfaces/ and PRODUCT.md are committed)
+.impeccable/shots/
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/config.local.json

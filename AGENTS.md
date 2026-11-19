@@ -13,14 +13,20 @@ Read `docs/index.md` for the catalogue. This file is what surprised us while bui
 3. **No AI-generated imagery of people.** See `IMAGE_CREDITS.md`.
 4. Accessibility rules from the Design Guidelines are launch blockers: run `npm run contrast` after any
    colour change; keep focus rings, 44px targets, 16px body text, `aria-live` for status.
-5. **Colour follows the Design Guidelines (Sept 2026)** on the final layout (Nov 2026):
-   Naijapath Green `green-500` (#1E6428) is a surface **only** for the nav bar and the hero;
-   every other section is white / warm white (`base-50`) / Light Green Tint (`green-100`);
-   H1/H2 on light surfaces are Near Black (`base-900`); green is for links, icons, figures and
-   secondary (outline) buttons; **orange is for CTAs and small accents only** — implemented as
-   `terracotta-500` (#B5451B) because the guideline #D24B00 gives 4.4:1 with 16px white labels;
-   footer is Near Black. `green-600` is a hover step, not a surface. No lime. Pill CTAs and
-   black-and-white photos come from the approved layout.
+5. **redesign-v3 design system** (branch `redesign-v3`, brief of 2026-11-19; direction contract
+   in `.impeccable/surfaces/`). Cream `#FAF8F2` ground; white "sheets" (28px radius, 12–16px
+   inset, `NSheet` / `sheet` utility); forest `#1F5C2C` the one dark field; ember `#B84A1F`
+   **only** on primary action pills; sage / sand / mist as whole tint fields; ink / body / muted text.
+   **Muted `#8A938E` is large text on white only** — 2.98:1 on cream fails. General Sans
+   (Fontshare, self-hosted) for everything. Lucide line-art via `NIcon` (stroke in rendered px).
+   Motion: GSAP + ScrollTrigger + SplitText + Lenis, lazy, via `plugins/motion.client.ts` and
+   `useScrollMotion`; never loaded under reduced motion. Reference page: `/design-system` (dev only).
+   **Transition:** the old ramp names (`base-*`, `green-*`, `terracotta-*`, `text-h2`…) are
+   aliases kept only until every section is rebuilt — never use them in new work; delete the
+   LEGACY block in `tailwind.css` after the last section.
+6. **Content lock.** After any change run `node scripts/content-lock.mjs --check` (dev server
+   up). It must report no differences; a copy change needs the client's approval and a regenerated
+   `content-lock.md`.
 
 ## Things that will bite you
 

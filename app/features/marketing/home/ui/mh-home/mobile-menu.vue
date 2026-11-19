@@ -51,6 +51,7 @@
           </NButton>
           <NButton
             :to="NAV_COPY.ctaGhost.to"
+            color="primary"
             variant="outline"
             shape="pill"
             size="lg"

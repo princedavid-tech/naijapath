@@ -3,22 +3,24 @@
 // Thresholds: 4.5 = normal text (AA), 3 = large text (≥24px, or ≥18.66px bold) and UI components / graphics.
 
 const T = {
-  "base-0": "#FFFFFF",
-  "base-50": "#F9F7F4",
-  "base-100": "#F3F4F6",
-  "base-150": "#E5E7EB",
-  "base-500": "#6B7280",
-  "base-600": "#374151",
-  "base-900": "#1A1A1A",
-  "green-50": "#F0F7F2",
-  "green-100": "#E8F5EA",
-  "green-150": "#CFE3D6",
-  "green-500": "#1E6428",
-  "green-600": "#1B3A2D",
-  "terracotta-50": "#FDF0EA",
-  "terracotta-150": "#E7BBA8",
-  "terracotta-500": "#B5451B",
-  "terracotta-600": "#963614",
+  // v3 palette (redesign-v3)
+  cream: "#FAF8F2",
+  sheet: "#FFFFFF",
+  hairline: "#ECEAE3",
+  forest: "#1F5C2C",
+  "forest-deep": "#0F2A17",
+  ember: "#B84A1F",
+  "ember-deep": "#9E3E18",
+  sage: "#E4EDE4",
+  sand: "#F3E7DA",
+  mist: "#E9E8F4",
+  ink: "#16211B",
+  body: "#4F5A54",
+  muted: "#8A938E",
+  white: "#FFFFFF",
+  // transitional legacy aliases still rendered by sections not yet rebuilt
+  "legacy-base-500": "#66706A",
+  // functional
   "success-50": "#F0FDF4",
   "success-500": "#15803D",
   "warning-50": "#FFFBEB",
@@ -48,86 +50,53 @@ const ratio = (a, b) => {
 };
 
 // [foreground token, foreground alpha, background token, min ratio, where it is used]
-// Palette = Design Guidelines (Sept 2026): Naijapath Green #1E6428 for nav bar + hero, white /
-// warm-white content sections, Near Black #1A1A1A headings and footer, orange for CTAs only
-// (terracotta #B5451B — the guideline orange #D24B00 is 4.4:1 with 16px white labels).
+// redesign-v3 palette. Text pairs need 4.5 (3 for large text ≥24px); UI and graphics need 3.
 const PAIRS = [
-  // ── Light content sections ──
-  ["base-600", 1, "base-0", 4.5, "Body text on white"],
-  ["base-600", 1, "base-50", 4.5, "Body text on warm white (Commission, Stories)"],
-  [
-    "base-600",
-    1,
-    "green-100",
-    4.5,
-    "Body text on Light Green Tint (stage cards, highlighted Join card)",
-  ],
-  ["base-600", 1, "terracotta-50", 4.5, "Body text on Light Orange Tint"],
-  ["base-500", 1, "base-0", 4.5, "Supporting text, captions, supporting note (white)"],
-  ["base-500", 1, "base-50", 4.5, "Supporting text on warm white"],
-  ["base-900", 1, "base-0", 4.5, "Near-black H2/H3 on white"],
-  ["base-900", 1, "base-50", 4.5, "Near-black H2 on warm white"],
-  ["base-900", 1, "green-100", 4.5, "Near-black H3 on Light Green Tint"],
-  ["green-500", 1, "base-0", 4.5, "Links, stat figures, eyebrow-free labels on white"],
-  ["green-500", 1, "base-50", 4.5, "Links on warm white"],
-  [
-    "green-500",
-    1,
-    "green-100",
-    4.5,
-    "Ticker words / stage numbers / audience label on Light Green Tint",
-  ],
-  ["green-500", 1, "green-50", 4.5, "Green text on mint (agreed-actions chip)"],
-  ["terracotta-500", 1, "base-0", 4.5, "Section label text on white pill"],
-  ["terracotta-500", 1, "terracotta-50", 4.5, "Section label pill (terracotta tint)"],
-  ["base-900", 1, "green-150", 4.5, "Text on green-150"],
-  [
-    "base-600",
-    1,
-    "green-150",
-    4.5,
-    "Agreed-actions tick chips / dashboard bar labels on green-150",
-  ],
-  // ── Naijapath Green: nav bar + hero ──
-  ["base-0", 1, "green-500", 4.5, "Nav links, hero H1, white text on Naijapath Green"],
-  ["base-0", 0.8, "green-500", 4.5, "Hero subheadline (white @ 80%, per guidelines)"],
-  ["base-900", 1, "base-0", 4.5, "Hero badges / session card (white chips on green)"],
-  // ── Orange CTAs ──
-  [
-    "base-0",
-    1,
-    "terracotta-500",
-    4.5,
-    "CTA label (Book a Session, Find Career Guidance, Subscribe…)",
-  ],
-  ["base-0", 1, "terracotta-600", 4.5, "CTA label on hover"],
-  // ── Near Black footer ──
-  ["base-0", 1, "base-900", 4.5, "Footer headings / tagline"],
-  ["base-150", 1, "base-900", 4.5, "Footer links, captions, newsletter note"],
-  ["danger-100", 1, "base-900", 4.5, "Form error text on the footer"],
-  ["base-900", 1, "base-0", 4.5, "Newsletter input text (white field)"],
-  ["base-500", 1, "base-0", 4.5, "Newsletter input placeholder (white field)"],
+  // ── Text on light surfaces ──
+  ["ink", 1, "cream", 4.5, "Headings on the cream ground"],
+  ["ink", 1, "sheet", 4.5, "Headings on white sheets"],
+  ["body", 1, "sheet", 4.5, "Body copy on white sheets"],
+  ["body", 1, "cream", 4.5, "Body copy on cream"],
+  ["body", 1, "sage", 4.5, "Body copy on sage (Career Brief panel)"],
+  ["body", 1, "sand", 4.5, "Body copy on sand (Organisations door)"],
+  ["body", 1, "mist", 4.5, "Body copy on mist (Practitioners door)"],
+  ["ink", 1, "sage", 4.5, "Headings on sage"],
+  ["ink", 1, "sand", 4.5, "Headings on sand"],
+  ["ink", 1, "mist", 4.5, "Headings on mist"],
+  ["forest", 1, "sheet", 4.5, "Eyebrows, links, figures on white"],
+  ["forest", 1, "cream", 4.5, "Eyebrows and marquee on cream"],
+  ["forest", 1, "sage", 4.5, "Eyebrows and links on sage"],
+  ["forest", 1, "sand", 4.5, "Eyebrows on sand"],
+  ["forest", 1, "mist", 4.5, "Eyebrows on mist"],
+  ["muted", 1, "sheet", 3, "Muted: LARGE text (≥24px) only, e.g. inactive stage numbers"],
+  // muted on cream is 2.98:1 (fails even large text): muted never sits on cream or the tints.
+  ["legacy-base-500", 1, "cream", 4.5, "Legacy small grey (transition) on cream"],
+  ["legacy-base-500", 1, "sheet", 4.5, "Legacy small grey (transition) on white"],
+  // ── Actions ──
+  ["white", 1, "ember", 4.5, "Primary action pill label"],
+  ["white", 1, "ember-deep", 4.5, "Primary action pill label, hover"],
+  ["white", 1, "forest", 4.5, "Forest pill label"],
+  ["white", 1, "forest-deep", 4.5, "Forest pill label, hover"],
+  ["ink", 1, "sheet", 4.5, "Light pill label"],
+  // ── Text on forest ──
+  ["white", 1, "forest", 4.5, "Headings on the forest panel"],
+  ["white", 0.8, "forest", 4.5, "Body copy on forest (white 80%)"],
+  ["sage", 1, "forest", 4.5, "Eyebrows on forest"],
+  ["white", 1, "forest-deep", 4.5, "Hero text over the gradient's darkest stop"],
+  // ── UI and graphics (3:1) ──
+  ["forest", 1, "sheet", 3, "Focus ring / line-art on white"],
+  ["forest", 1, "cream", 3, "Focus ring / line-art on cream"],
+  ["white", 1, "forest", 3, "Focus ring on forest"],
+  ["forest", 1, "sand", 3, "Line-art icon on sand"],
+  ["forest", 1, "mist", 3, "Line-art icon on mist"],
+  ["sage", 1, "forest", 3, "Line-art icon on forest"],
+  ["ink", 0.2, "sheet", 1, "Light outline pill border (decorative; label carries contrast)"],
+  ["forest", 0.35, "sheet", 1, "Forest outline pill border (decorative; label carries contrast)"],
   // ── Status ──
   ["success-500", 1, "success-50", 4.5, "Status pill: Confirmed / Completed"],
-  ["warning-500", 1, "warning-50", 4.5, "Status pill: Pending"],
-  ["info-500", 1, "info-50", 4.5, "Status pill: info"],
-  ["danger-500", 1, "base-0", 4.5, "Form error text on white"],
-  // ── Non-text (UI components & meaningful graphics): 3:1 ──
-  ["green-500", 1, "base-0", 3, "Focus ring on white / secondary (outline) button border"],
-  ["green-500", 1, "base-50", 3, "Focus ring on warm white / stage track fill"],
-  ["green-500", 1, "green-100", 3, "Focus ring / pause button border on Light Green Tint"],
-  ["base-0", 1, "green-500", 3, "Focus ring + white outline button on Naijapath Green"],
-  ["base-0", 1, "base-900", 3, "Focus ring on the footer / white input field boundary"],
-  ["terracotta-500", 1, "base-0", 3, "Stage knobs (orange ring) on white"],
-  ["terracotta-150", 1, "base-900", 3, "Location icon on the footer"],
-  ["terracotta-150", 1, "green-500", 3, "Location icon in the top strip"],
-  ["base-0", 1, "terracotta-500", 3, "Social icons on orange discs / seal text"],
-  ["base-500", 1, "base-0", 3, "Input border on white field"],
-  ["green-500", 0.78, "base-0", 3, "Dashboard chart bars (earlier weeks, 78%)"],
-  ["amber-500", 1, "base-0", 3, "Rating stars (always paired with '4.9 / 5.0' text)"],
-  ["danger-100", 1, "base-900", 3, "Error border on the footer"],
-  ["danger-500", 1, "base-0", 3, "Error border on light surfaces"],
-  ["base-600", 1, "base-0", 3, "Ghost/outline button border on white"],
+  ["danger-500", 1, "sheet", 4.5, "Form error text on light"],
+  ["danger-100", 1, "forest", 4.5, "Form error text on forest"],
+  ["amber-500", 1, "sheet", 3, "Rating stars (always with the numeric score)"],
 ];
 
 let failed = 0;
