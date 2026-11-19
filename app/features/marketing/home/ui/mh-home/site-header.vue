@@ -1,134 +1,184 @@
 <template>
-  <!-- One <header> landmark. It sticks at -2.75rem from 640px, so the top strip (2.75rem)
-       scrolls away and the bar below stays pinned. -->
+  <!-- §2.1 Header. Fixed; while the page is at the top it sits INSIDE the hero sheet (white
+       logo, frosted nav pill over the photo). Once scrolled it becomes a compact cream bar. -->
   <header
-    data-surface="dark"
     data-slot="site-header"
-    :class="
-      cn(
-        'sticky top-0 z-40 border-b border-green-600 bg-green-500 text-base-0 transition-shadow duration-200 ease-brand sm:-top-11',
-        scrolled && 'shadow-card',
-      )
-    "
+    :data-surface="onPhoto ? 'dark' : undefined"
+    class="pointer-events-none fixed inset-x-0 top-0 z-40"
   >
-    <!-- Top strip: location left, social on an orange accent tab right. -->
-    <div class="hidden border-b border-base-0/15 sm:block">
-      <div
-        class="mx-auto flex h-11 w-full max-w-[90rem] items-stretch justify-between pl-6 lg:pl-8"
-      >
-        <p class="inline-flex items-center gap-2 text-sm">
-          <NIcon name="map-pin" :size="18" class="text-terracotta-150" />
-          {{ MICROCOPY.footer.locationPill }}
-        </p>
-        <ul
-          :aria-label="MICROCOPY.a11y.socialLabel"
-          class="mh-tab flex items-center gap-1 bg-terracotta-500 pr-6 pl-12 text-base-0 lg:pr-8"
-        >
-          <li v-for="s in HOME_SOCIAL" :key="s.id">
-            <NLink
-              v-if="s.href"
-              :to="s.href"
-              :aria-label="s.label"
-              class="inline-flex size-11 items-center justify-center rounded-full hover:bg-base-0/15"
-            >
-              <NIcon :name="s.id" :size="18" />
-            </NLink>
-            <span v-else class="inline-flex size-9 items-center justify-center" aria-hidden="true">
-              <NIcon :name="s.id" :size="18" />
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- The header is allowed a wider measure than page content (90rem) so all four links and
-         both CTAs fit at 16px. Below 1440px: hamburger + Book a Session. -->
-    <NContainer class="flex h-[var(--header-h)] max-w-[90rem] items-center gap-4">
+    <div
+      :class="
+        cn(
+          'pointer-events-auto mx-[var(--sheet-inset)] flex items-center gap-2 transition-[margin,height,padding,background-color,box-shadow,border-radius] duration-300 ease-out-soft sm:gap-4',
+          onPhoto
+            ? 'mt-[var(--sheet-inset)] h-[5.25rem] rounded-sheet bg-transparent px-3 sm:px-6 lg:px-8'
+            : 'mt-2 h-16 rounded-[1.25rem] bg-cream/95 px-3 shadow-bar sm:px-4 lg:px-5',
+        )
+      "
+    >
       <NLink
         :to="HOME_ROUTES.home"
-        class="-m-1 inline-flex min-h-11 items-center rounded-sm p-1"
+        class="-m-1 inline-flex min-h-11 shrink-0 items-center rounded-lg p-1"
         :aria-label="MICROCOPY.a11y.homeLink"
       >
-        <NLogo tone="inverse" />
+        <NLogo :tone="onPhoto ? 'inverse' : 'default'" />
       </NLink>
 
-      <!-- Desktop navigation (≥1440px: four links + two CTAs at 16px), centred between logo
-           and CTAs. -->
+      <!-- Centre: frosted pill nav with a sliding white indicator (≥1440px: four links + Sign In). -->
       <nav :aria-label="MICROCOPY.a11y.primaryNav" class="mx-auto hidden 2xl:block">
-        <ul class="flex items-center gap-1">
-          <li v-for="link in NAV_COPY.links" :key="link.label">
-            <NLink
-              :to="link.to"
-              :class="
-                cn(
-                  'inline-flex min-h-11 items-center rounded-sm px-2.5 font-heading text-base whitespace-nowrap transition-colors duration-200 ease-brand',
-                  // Audience weight difference (brief §01): organisations' link is heavier/darker.
-                  link.audience === 'organisation'
-                    ? 'font-semibold text-base-0'
-                    : 'font-medium text-base-0',
-                )
-              "
-            >
-              <span class="link-underline">{{ link.label }}</span>
-            </NLink>
-          </li>
-        </ul>
+        <div
+          ref="pill"
+          :class="
+            cn(
+              'relative flex items-center rounded-full border p-1 transition-[background-color,border-color] duration-300 ease-out-soft',
+              onPhoto
+                ? 'border-white/20 bg-forest-deep/45 backdrop-blur-md'
+                : 'border-transparent bg-ink/[0.05]',
+            )
+          "
+          @mouseleave="hovered = null"
+        >
+          <span
+            aria-hidden="true"
+            class="mh-nav-indicator pointer-events-none absolute top-1 left-0 h-11 rounded-full bg-white shadow-soft"
+            :style="indicatorStyle"
+          />
+          <ul class="relative flex items-center">
+            <li v-for="(item, i) in ITEMS" :key="item.label">
+              <NLink
+                :ref="(el) => setItem(el, i)"
+                :to="item.to"
+                :aria-current="
+                  item.sectionId && item.sectionId === activeId ? 'location' : undefined
+                "
+                :class="
+                  cn(
+                    'relative inline-flex h-11 items-center rounded-full px-4 text-[0.9375rem] font-medium whitespace-nowrap transition-colors duration-300 ease-out-soft',
+                    highlighted === i
+                      ? 'text-ink'
+                      : onPhoto
+                        ? 'text-white'
+                        : 'text-body hover:text-ink',
+                  )
+                "
+                @mouseenter="hovered = i"
+                @focus="hovered = i"
+                @blur="hovered = null"
+              >
+                {{ item.label }}
+              </NLink>
+            </li>
+          </ul>
+        </div>
       </nav>
 
       <div class="ml-auto flex items-center gap-2 2xl:ml-0">
         <NButton
-          :to="NAV_COPY.ctaGhost.to"
-          color="inverse"
-          variant="ghost"
-          class="hidden 2xl:inline-flex"
-        >
-          {{ NAV_COPY.ctaGhost.label }}
-        </NButton>
-        <NButton
           :to="NAV_COPY.ctaFilled.to"
           color="accent"
-          shape="pill"
-          class="hidden sm:inline-flex"
+          class="hidden min-h-11 px-4 text-sm xs:inline-flex sm:px-5 sm:text-[0.9375rem]"
         >
           {{ NAV_COPY.ctaFilled.label }}
         </NButton>
 
-        <!-- Mobile / tablet menu trigger. The sheet itself (Reka UI) loads on demand. -->
+        <!-- Below 1440px: menu button. The full-screen menu (mobile-menu.vue) loads on demand. -->
         <button
           type="button"
           :class="
-            cn(buttonVariants({ color: 'inverse', variant: 'ghost', size: 'icon' }), '2xl:hidden')
+            cn(
+              'inline-flex size-11 items-center justify-center rounded-full border transition-colors duration-300 ease-out-soft 2xl:hidden',
+              onPhoto
+                ? 'border-white/25 bg-forest-deep/45 text-white backdrop-blur-md hover:bg-forest-deep/60'
+                : 'border-hairline bg-sheet text-ink hover:border-ink/25',
+            )
           "
           :aria-label="MICROCOPY.a11y.openMenu"
           aria-haspopup="dialog"
           :aria-expanded="menuOpen ? 'true' : 'false'"
           @click="openMenu"
         >
-          <NIcon name="menu" :size="26" />
+          <NIcon name="menu" :size="22" />
         </button>
         <LazyMhHomeMobileMenu v-if="menuMounted" v-model:open="menuOpen" />
       </div>
-    </NContainer>
+    </div>
   </header>
 </template>
 
 <script setup lang="ts">
 /**
- * 01 Navigation Bar — Naijapath Green with white text (Design Guidelines). Top strip (location +
- * social on an orange accent tab) scrolls away; the bar sticks and gains a shadow after 80px.
- * The mobile sheet (mobile-menu.vue) is mounted on first open and pre-fetched when the browser
- * is idle, so the first tap is instant on any reasonable connection.
+ * §2.1 Header (redesign-v3).
+ * - At the top of the page it overlays the hero sheet: white logo, frosted pill nav, orange
+ *   "Book a Session". After 24px of scroll it settles into a compact cream bar (300ms).
+ * - The nav pill's white indicator SLIDES to the hovered/focused item, and otherwise rests on the
+ *   section currently in view (aria-current="location"); at the very top it fades out.
+ * - "Sign In" (locked content) lives at the right end of the pill; below 1440px it is in the menu.
  */
-import { onBeforeUnmount, onMounted, ref } from "vue";
-import { buttonVariants } from "~/components/n/button/button-variants";
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  type ComponentPublicInstance,
+} from "vue";
 import { cn } from "~/utils/utils";
+import { motionState } from "~/utils/motion-state";
+import { hashTargetId } from "~/utils/scroll";
 import { NAV_COPY } from "../../domain/home-copy";
-import { HOME_ROUTES, HOME_SOCIAL } from "../../domain/home-routes";
+import { HOME_ROUTES } from "../../domain/home-routes";
 import { MICROCOPY } from "../../domain/home-microcopy";
 
+const ITEMS = [
+  ...NAV_COPY.links.map((l) => ({ label: l.label, to: l.to, sectionId: hashTargetId(l.to) })),
+  { label: NAV_COPY.ctaGhost.label, to: NAV_COPY.ctaGhost.to, sectionId: null as string | null },
+];
+
 const scrolled = ref(false);
+const onPhoto = computed(() => !scrolled.value);
 const menuOpen = ref(false);
 const menuMounted = ref(false);
+
+// ── Sliding indicator ────────────────────────────────────────────────
+const pill = ref<HTMLElement | null>(null);
+const itemEls: HTMLElement[] = [];
+const hovered = ref<number | null>(null);
+const activeId = ref<string | null>(null);
+const box = ref<{ x: number; w: number } | null>(null);
+
+function setItem(el: Element | ComponentPublicInstance | null, i: number) {
+  const node = el && "$el" in el ? (el.$el as HTMLElement) : (el as HTMLElement | null);
+  if (node) itemEls[i] = node;
+}
+
+const activeIndex = computed(() => {
+  const i = ITEMS.findIndex((it) => it.sectionId && it.sectionId === activeId.value);
+  return i >= 0 ? i : null;
+});
+const highlighted = computed(() => hovered.value ?? activeIndex.value);
+
+function measure() {
+  const i = highlighted.value;
+  const el = i === null ? null : itemEls[i];
+  if (!el || !pill.value) return;
+  box.value = { x: el.offsetLeft + 4, w: el.offsetWidth };
+}
+
+const indicatorStyle = computed(() => ({
+  width: `${box.value?.w ?? 0}px`,
+  transform: `translateX(${box.value?.x ?? 0}px)`,
+  opacity: highlighted.value === null ? 0 : 1,
+}));
+
+watch(highlighted, () => measure());
+
+// ── Scroll state + scroll spy ────────────────────────────────────────
+const onScroll = () => {
+  scrolled.value = window.scrollY > 24;
+};
+
+let spy: IntersectionObserver | undefined;
+let ro: ResizeObserver | undefined;
 
 const warmMenuChunk = () => void import("./mobile-menu.vue");
 
@@ -137,15 +187,34 @@ function openMenu() {
   menuOpen.value = true;
 }
 
-const onScroll = () => {
-  scrolled.value = window.scrollY > 80;
-};
+// Smooth scroll would keep running under the open menu; pause it while the menu is open.
+watch(menuOpen, (open) => {
+  if (open) motionState.lenis?.stop();
+  else motionState.lenis?.start();
+});
 
 onMounted(() => {
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // Warm the menu chunk when idle (only where the hamburger is shown).
+  const ids = ITEMS.map((it) => it.sectionId).filter((id): id is string => !!id);
+  spy = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.isIntersecting) activeId.value = e.target.id;
+      if (window.scrollY < window.innerHeight * 0.5) activeId.value = null;
+    },
+    { rootMargin: "-45% 0px -50% 0px" },
+  );
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (el) spy.observe(el);
+  }
+
+  if (pill.value) {
+    ro = new ResizeObserver(() => measure());
+    ro.observe(pill.value);
+  }
+
   if (!window.matchMedia("(min-width: 90rem)").matches) {
     const idle = (window as Window & { requestIdleCallback?: (cb: () => void) => number })
       .requestIdleCallback;
@@ -153,12 +222,19 @@ onMounted(() => {
     else setTimeout(warmMenuChunk, 2000);
   }
 });
-onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", onScroll);
+  spy?.disconnect();
+  ro?.disconnect();
+});
 </script>
 
 <style scoped>
-/* The lime tab's slanted left edge. */
-.mh-tab {
-  clip-path: polygon(1.75rem 0, 100% 0, 100% 100%, 0 100%);
+.mh-nav-indicator {
+  transition:
+    transform 450ms var(--ease-out-soft),
+    width 450ms var(--ease-out-soft),
+    opacity 250ms var(--ease-out-soft);
 }
 </style>

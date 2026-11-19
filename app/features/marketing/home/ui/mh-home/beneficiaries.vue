@@ -79,6 +79,9 @@
           </div>
           <div ref="cardWrap" class="reveal mt-8" :data-revealed="cardVisible">
             <MhHomeAgreedActionsCard class="w-full max-w-none" />
+            <!-- Interim home (from the old hero) until §2.4 is redesigned: the booking that
+                 precedes the record. -->
+            <MhHomeSessionConfirmedCard class="mt-4 ml-auto w-full max-w-[21rem]" />
           </div>
           <div class="mt-8">
             <NButton

@@ -51,9 +51,12 @@ Read `docs/index.md` for the catalogue. This file is what surprised us while bui
 - **`status: false` arrives on HTTP 200.** Every write goes through `unwrapApiResponse`.
 - **PowerShell 5.1 `Get-Content -Raw | Set-Content`** re-encodes UTF-8 as ANSI and mangles `—`, `→`,
   `≥`. Edit files with an editor/tool, not shell pipelines.
-- The hero H1 sets on **three lines at ≥ 1280px** at 48px in the final layout's half-width column
-  (the earlier two-line rule belonged to the previous layout). If you change the hero grid or font,
-  re-measure (Playwright: H1 height / line-height).
+- **v3 hero:** the H1 is set as its two approved lines (`HEADLINE_LINES` in `hero.vue`, asserted
+  against the locked copy) and sets on two lines from 1024px. White hero text must stay ≥ 4.5:1
+  against the LIGHTEST pixel behind it — the photo is light; the veil, gradient and forest-tinted
+  frost (nav pill, chips) exist for that. Re-measure after touching the photo, scrim or frost.
+- **Never put double quotes inside a `:class="…"` binding** — it ends the attribute and the page
+  500s with "Error parsing JavaScript expression". Use single quotes inside bindings.
 - **Scoped `:global(.x) .y` compiles to just `.x`** in Vue SFCs — `:global(.js) .foo { transform… }`
   scaled `<html>` to nothing and blanked the page. Put such rules in an unscoped `<style>` block
   with a component-unique class (see `how-it-works.vue`).

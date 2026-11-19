@@ -1,62 +1,58 @@
 <template>
   <DialogRoot v-model:open="open">
     <DialogPortal>
-      <DialogOverlay class="mh-menu-overlay fixed inset-0 z-50 bg-base-900/50" />
       <DialogContent
-        class="mh-menu-panel fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-base-0 shadow-card-hover focus:outline-none"
+        class="mh-menu fixed inset-0 z-50 flex flex-col overflow-y-auto bg-cream focus:outline-none"
         @close-auto-focus="onCloseAutoFocus"
       >
         <div
-          class="flex h-[var(--header-h)] items-center justify-between border-b border-base-150 px-4"
+          class="mx-[var(--sheet-inset)] mt-2 flex h-16 shrink-0 items-center justify-between px-3 sm:px-4"
         >
-          <DialogTitle class="font-heading text-lg font-semibold text-base-900">
-            {{ MICROCOPY.a11y.mobileMenuTitle }}
-          </DialogTitle>
+          <NLogo />
+          <DialogTitle class="sr-only">{{ MICROCOPY.a11y.mobileMenuTitle }}</DialogTitle>
           <DialogDescription class="sr-only">{{ MICROCOPY.a11y.primaryNav }}</DialogDescription>
           <DialogClose
-            :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'text-green-500')"
+            class="inline-flex size-11 items-center justify-center rounded-full border border-hairline bg-sheet text-ink transition-colors duration-200 ease-out-soft hover:border-ink/25"
             :aria-label="MICROCOPY.a11y.closeMenu"
           >
-            <NIcon name="close" :size="24" />
+            <NIcon name="close" :size="22" />
           </DialogClose>
         </div>
 
-        <nav :aria-label="MICROCOPY.a11y.primaryNav" class="flex-1 overflow-y-auto px-4 py-4">
+        <nav :aria-label="MICROCOPY.a11y.primaryNav" class="site-container flex-1 pt-6 pb-8">
           <ul class="flex flex-col">
-            <li v-for="link in NAV_COPY.links" :key="link.label" class="border-b border-base-150">
+            <li
+              v-for="(link, i) in NAV_COPY.links"
+              :key="link.label"
+              class="mh-menu-item border-b border-hairline"
+              :style="{ '--i': i }"
+            >
               <a
                 :href="link.to"
-                :class="
-                  cn(
-                    'flex min-h-14 items-center font-heading text-lg',
-                    link.audience === 'organisation'
-                      ? 'font-semibold text-green-500'
-                      : 'font-medium text-base-600',
-                  )
-                "
+                class="group/menu flex min-h-[4.5rem] items-center justify-between gap-4 py-3 text-[clamp(1.75rem,1.4rem+1.6vw,2.5rem)] leading-[1.1] font-medium tracking-[-0.02em] text-ink"
                 @click.prevent="go(link.to)"
               >
                 {{ link.label }}
+                <NIcon
+                  name="arrow-right"
+                  :size="28"
+                  :stroke="1.25"
+                  class="text-forest transition-transform duration-300 ease-out-soft group-hover/menu:translate-x-1"
+                />
               </a>
             </li>
           </ul>
         </nav>
 
-        <!-- Both CTAs as stacked full-width buttons (brief §01 mobile). -->
         <div
-          class="flex flex-col gap-3 border-t border-base-150 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+          class="site-container mh-menu-item flex shrink-0 flex-col gap-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:flex-row"
+          style="--i: 4"
         >
-          <NButton :to="NAV_COPY.ctaFilled.to" color="accent" shape="pill" size="lg" class="w-full">
+          <NButton :to="NAV_COPY.ctaFilled.to" color="accent" size="lg" class="w-full sm:w-auto">
             {{ NAV_COPY.ctaFilled.label }}
+            <NIcon name="arrow-right" :size="18" />
           </NButton>
-          <NButton
-            :to="NAV_COPY.ctaGhost.to"
-            color="primary"
-            variant="outline"
-            shape="pill"
-            size="lg"
-            class="w-full"
-          >
+          <NButton :to="NAV_COPY.ctaGhost.to" color="light" size="lg" class="w-full sm:w-auto">
             {{ NAV_COPY.ctaGhost.label }}
           </NButton>
         </div>
@@ -67,21 +63,18 @@
 
 <script setup lang="ts">
 /**
- * Mobile / tablet menu sheet (Reka UI Dialog). Loaded on demand by site-header.vue so Reka is
- * not in the initial bundle. Focus is trapped while open, Esc closes, and focus returns to the
- * element that opened it (the hamburger) — or moves to the chosen section when a link was used.
+ * §2.1 mobile menu (redesign-v3): a full-screen cream sheet with large links (Reka UI Dialog,
+ * loaded on demand by site-header.vue). Focus is trapped while open, Esc closes, and focus returns
+ * to the menu button — or moves to the chosen section when a link was used.
  */
 import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogOverlay,
   DialogPortal,
   DialogRoot,
   DialogTitle,
 } from "reka-ui";
-import { buttonVariants } from "~/components/n/button/button-variants";
-import { cn } from "~/utils/utils";
 import { hashTargetId, scrollToSection } from "~/utils/scroll";
 import { NAV_COPY } from "../../domain/home-copy";
 import { MICROCOPY } from "../../domain/home-microcopy";
@@ -89,14 +82,14 @@ import { MICROCOPY } from "../../domain/home-microcopy";
 const open = defineModel<boolean>("open", { required: true });
 let pendingTarget: string | null = null;
 
-/** Close the sheet first (it locks body scroll), then navigate once focus handling runs. */
+/** Close the menu first (it locks body scroll), then navigate once focus handling runs. */
 function go(to: string) {
   pendingTarget = to;
   open.value = false;
 }
 
 function onCloseAutoFocus(event: Event) {
-  if (!pendingTarget) return; // normal close → focus returns to the hamburger
+  if (!pendingTarget) return; // normal close → focus returns to the menu button
   event.preventDefault();
   const to = pendingTarget;
   pendingTarget = null;
@@ -110,37 +103,31 @@ function onCloseAutoFocus(event: Event) {
 
 <style scoped>
 @media (prefers-reduced-motion: no-preference) {
-  .mh-menu-overlay[data-state="open"] {
-    animation: mh-fade-in var(--dur-ui) var(--ease-brand);
+  .mh-menu[data-state="open"] {
+    animation: mh-menu-in 350ms var(--ease-out-soft);
   }
-  .mh-menu-overlay[data-state="closed"] {
-    animation: mh-fade-out var(--dur-ui) var(--ease-brand);
+  .mh-menu[data-state="closed"] {
+    animation: mh-menu-out 220ms var(--ease-out-soft);
   }
-  .mh-menu-panel[data-state="open"] {
-    animation: mh-slide-in 280ms var(--ease-brand);
-  }
-  .mh-menu-panel[data-state="closed"] {
-    animation: mh-slide-out var(--dur-ui) var(--ease-brand);
+  .mh-menu[data-state="open"] .mh-menu-item {
+    animation: mh-menu-item 600ms var(--ease-out-soft) both;
+    animation-delay: calc(80ms + var(--i, 0) * 60ms);
   }
 }
-@keyframes mh-fade-in {
+@keyframes mh-menu-in {
   from {
     opacity: 0;
   }
 }
-@keyframes mh-fade-out {
+@keyframes mh-menu-out {
   to {
     opacity: 0;
   }
 }
-@keyframes mh-slide-in {
+@keyframes mh-menu-item {
   from {
-    transform: translateX(100%);
-  }
-}
-@keyframes mh-slide-out {
-  to {
-    transform: translateX(100%);
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 </style>

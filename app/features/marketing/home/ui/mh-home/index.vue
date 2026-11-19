@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-svh flex-col bg-base-0">
+  <div class="flex min-h-svh flex-col">
     <NSkipLink :target="HOME_SECTION_IDS.main">{{ MICROCOPY.a11y.skipLink }}</NSkipLink>
     <!-- Every section is fully server-rendered. Hydration is deferred so the browser paints the
          page (and the LCP photo) BEFORE any component JS runs:
@@ -10,9 +10,9 @@
     <main :id="HOME_SECTION_IDS.main" tabindex="-1" class="flex-1">
       <LazyMhHomeHero hydrate-on-idle />
       <LazyMhHomeTicker hydrate-on-idle />
-      <!-- The final layout sets the trust figures as the closing row of "For You". -->
-      <LazyMhHomeBeneficiaries :hydrate-on-visible="EARLY" />
+      <!-- §2.3 Intro + numbers, then §2.4 For You. -->
       <LazyMhHomeTrustBar :hydrate-on-visible="EARLY" />
+      <LazyMhHomeBeneficiaries :hydrate-on-visible="EARLY" />
       <LazyMhHomeCommission :hydrate-on-visible="EARLY" />
       <LazyMhHomeHowItWorks :hydrate-on-visible="EARLY" />
       <LazyMhHomeSocialProof :hydrate-on-visible="EARLY" />

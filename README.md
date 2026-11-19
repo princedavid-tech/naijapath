@@ -1,7 +1,7 @@
 # NaijaPath — homepage
 
 Marketing homepage for NaijaPath, Nigeria's First Digital Career Service Platform.
-Nuxt 4 · Vue 3.5 · TypeScript (strict) · Tailwind CSS v4 · Reka UI · three.js (hero only).
+Nuxt 4 · Vue 3.5 · TypeScript (strict) · Tailwind CSS v4 · Reka UI · GSAP + Lenis (lazy, off under reduced motion).
 
 ```sh
 npm install

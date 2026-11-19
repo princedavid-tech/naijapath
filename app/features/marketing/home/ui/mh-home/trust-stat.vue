@@ -1,33 +1,31 @@
 <template>
-  <li :class="cn('relative lg:px-10 lg:first:pl-0', props.class)">
-    <!-- Divider: hairline with the dot mark across it (desktop). -->
-    <span
-      v-if="props.divider"
-      aria-hidden="true"
-      class="absolute inset-y-0 left-0 hidden w-px bg-base-150 lg:block"
+  <!-- One figure: small label on top, big number, caption. Hairline dividers between figures. -->
+  <li
+    :class="
+      cn(
+        'flex flex-col gap-3 border-hairline pt-8 pb-2 max-sm:border-b max-sm:pb-8 sm:pr-6 sm:even:border-l sm:even:pl-6 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0',
+        props.class,
+      )
+    "
+  >
+    <p class="order-1 text-sm font-medium text-ink">{{ props.stat.label }}</p>
+    <p
+      class="tabular order-2 text-figure font-medium whitespace-nowrap text-forest lg:text-[clamp(2.25rem,0.8rem+2.3vw,3rem)]"
     >
-      <MhHomeDots class="absolute top-1/2 left-1/2 max-w-none -translate-1/2 bg-base-0 py-0.5" />
-    </span>
-    <p class="tabular font-heading text-[2.5rem] leading-none font-semibold text-green-500">
       <span ref="valueEl" aria-hidden="true">{{ display }}</span>
       <span class="sr-only">{{ props.stat.number }}</span>
     </p>
-    <p class="mt-3 font-heading text-base font-medium text-base-900">{{ props.stat.label }}</p>
-    <p class="mt-1 text-sm text-base-600">{{ props.stat.subLabel }}</p>
+    <p class="order-3 text-sm text-body">{{ props.stat.subLabel }}</p>
   </li>
 </template>
 
 <script setup lang="ts">
-/** One figure: large number, label, caption. */
+/** §2.3 figure. 350+ and 45+ count up once on view; the final value is always in the HTML. */
 import { computed, ref, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";
 import type { TrustStat } from "../../domain/home-copy";
 
-const props = defineProps<{
-  stat: TrustStat;
-  divider?: boolean;
-  class?: HTMLAttributes["class"];
-}>();
+const props = defineProps<{ stat: TrustStat; class?: HTMLAttributes["class"] }>();
 
 const valueEl = ref<HTMLElement | null>(null);
 const count = props.stat.countTo !== undefined ? useMhCountUp(valueEl, props.stat.countTo) : null;

@@ -358,6 +358,11 @@
   padding-inline: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
 }
 
+/* v3: the ONE photo treatment used on every photograph (black-and-white, gently lifted). */
+@utility photo-grade {
+  filter: grayscale(1) contrast(1.06) brightness(0.98);
+}
+
 @utility measure {
   max-width: 62ch;
 }

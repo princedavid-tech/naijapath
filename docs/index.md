@@ -68,7 +68,7 @@ Variants live in sibling `*-variants.ts` files (importable from plain `.ts`).
 | Composable | Purpose |
 |---|---|
 | `useCustomFetchNoAuth()` / `normalizeApiError()` | The one axios client → same-origin `/backend/**` proxy. |
-| `useThreeScene({ canvas, container, load, minWidth, pointer })` | Lifecycle for a lazily-imported WebGL scene: capability gate (WebGL2, > 4 cores, no Save-Data, ≥ minWidth), loads after first paint, DPR ≤ 1.5, pauses offscreen / hidden tab, reduced motion = one static frame, disposes on unmount. Status `idle → ready | fallback`. |
+| `useScrollMotion(scope, build, onStatic)` | redesign-v3 scoped GSAP motion: runs `build` in a gsap.context once the lazy motion bundle (plugins/motion.client.ts: GSAP + ScrollTrigger + SplitText + Lenis) is ready; reverts on unmount; `onStatic` leaves the final state under reduced motion. |
 | `useInViewOnce(el)` | One-shot IntersectionObserver reveal (replaces GSAP/ScrollTrigger). |
 
 ## Feature slice — `app/features/marketing/home/`
@@ -76,17 +76,15 @@ Variants live in sibling `*-variants.ts` files (importable from plain `.ts`).
 ```
 domain/          home-copy.ts (VERBATIM brief copy) · home-microcopy.ts (everything NOT in the brief)
                  home-routes.ts (paths, section ids, API, social) · home-testimonials.ts
-                 hero-path-field.ts (pure geometry shared by WebGL + SVG fallback)
-infrastructure/  webgl/hero-path-scene.ts (three.js; dynamically imported only)
 composition/     use-mh-newsletter · use-mh-stage-path · use-mh-count-up   (auto-imported)
 ui/mh-home/      index.vue (root) + one component per section → <MhHome…>
 index.ts         barrel — domain only
 ```
 
-Sections (brief order): `site-header` (+ `mobile-menu`, lazy) · `hero` (+ `hero-path`, `session-confirmed-card`) · `trust-bar`
-(+ `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`) · `commission` (+ `cohort-dashboard-card`) ·
-`how-it-works` · `social-proof` (+ `testimonial-card`) · `join` (+ `audience-card`) · `site-footer`
-(+ `newsletter-form`).
+Sections (redesign-v3 order): `site-header` (+ `mobile-menu`, lazy) · `hero` · `ticker` ·
+`trust-bar` (§2.3 intro + numbers, + `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`,
+interim `session-confirmed-card`) · `commission` (+ `cohort-dashboard-card`) · `how-it-works` ·
+`social-proof` (+ `testimonial-card`) · `join` (+ `audience-card`) · `site-footer` (+ `newsletter-form`).
 
 ## Scripts
 
@@ -96,5 +94,5 @@ Sections (brief order): `site-header` (+ `mobile-menu`, lazy) · `hero` (+ `hero
 | `npm run check` | `oxfmt → oxlint → nuxt typecheck` — the verification loop. |
 | `npm run contrast` | WCAG 2.2 AA audit of every colour pair in use. |
 | `npm run knip` | Unused files / exports / dependencies. |
-| `node scripts/generate-contours.mts` | Rebuild the hero contour SVG from `hero-path-field.ts`. |
+| `node scripts/content-lock.mjs --check` | Diff the rendered page against content-lock.md (dev server running). |
 | `node scripts/generate-brand-assets.mjs` | Rebuild `og-image.jpg` + `apple-touch-icon.png`. |
