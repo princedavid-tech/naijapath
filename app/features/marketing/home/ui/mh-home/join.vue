@@ -2,21 +2,20 @@
   <section
     :id="HOME_SECTION_IDS.join"
     tabindex="-1"
-    data-surface="dark"
     aria-labelledby="join-heading"
-    class="relative bg-green-600 text-base-0 defer-render"
+    class="relative bg-base-0 defer-render"
   >
     <div aria-hidden="true" class="mh-hatch h-7 lg:h-8" />
 
     <NContainer class="py-14 lg:py-20">
       <header class="max-w-[40rem]">
-        <MhHomeEyebrow tone="dark">{{ copy.label }}</MhHomeEyebrow>
-        <h2 id="join-heading" class="mt-4 text-display font-semibold text-base-0">
+        <MhHomeEyebrow>{{ copy.label }}</MhHomeEyebrow>
+        <h2 id="join-heading" class="mt-4 text-display font-semibold text-base-900">
           {{ copy.headline }}
         </h2>
       </header>
 
-      <!-- Three front doors; the middle one is lit (lime). -->
+      <!-- Three front doors; the middle one is highlighted (Light Green Tint). -->
       <ul class="mt-12 grid grid-cols-1 gap-6 lg:mt-14 lg:grid-cols-3">
         <li v-for="(card, i) in copy.cards" :key="card.audience">
           <MhHomeAudienceCard :card="card" :photo="PHOTOS[i]!" :lit="i === 1" class="h-full" />
@@ -29,7 +28,8 @@
 </template>
 
 <script setup lang="ts">
-/** 08 Join the Platform — dark band with hatched edges; three photo cards, the middle lit. */
+/** 08 Join the Platform — white band with green-hatched edges (section dividers); three photo
+ * cards, the middle one highlighted in Light Green Tint. */
 import { JOIN_COPY } from "../../domain/home-copy";
 import { HOME_SECTION_IDS } from "../../domain/home-routes";
 
@@ -47,7 +47,7 @@ const PHOTOS = [
 .mh-hatch {
   background-image: repeating-linear-gradient(
     -45deg,
-    rgb(255 255 255 / 0.1) 0 1.5px,
+    rgb(30 100 40 / 0.14) 0 1.5px,
     transparent 1.5px 10px
   );
 }

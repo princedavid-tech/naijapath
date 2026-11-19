@@ -5,14 +5,14 @@
     aria-hidden="true"
     focusable="false"
   >
-    <circle cx="8" cy="8" r="8" fill="var(--lime-400)" />
+    <circle cx="8" cy="8" r="8" :fill="disc" />
     <path d="M13 0a8 8 0 0 1 0 16Z" :fill="ink" />
     <path d="M19 0a8 8 0 0 1 0 16Z" :fill="ink" />
   </svg>
 </template>
 
 <script setup lang="ts">
-/** The layout's recurring mark: a lime disc followed by two half-discs. Decorative. */
+/** The recurring mark: an orange accent disc + two green half-discs (white on green). Decorative. */
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";
 
@@ -20,5 +20,8 @@ const props = withDefaults(
   defineProps<{ tone?: "light" | "dark"; class?: HTMLAttributes["class"] }>(),
   { tone: "light" },
 );
-const ink = computed(() => (props.tone === "dark" ? "var(--base-0)" : "var(--green-600)"));
+const ink = computed(() => (props.tone === "dark" ? "var(--base-0)" : "var(--green-500)"));
+const disc = computed(() =>
+  props.tone === "dark" ? "var(--terracotta-150)" : "var(--terracotta-500)",
+);
 </script>

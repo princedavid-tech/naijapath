@@ -3,21 +3,21 @@
     :id="HOME_SECTION_IDS.commission"
     tabindex="-1"
     aria-labelledby="commission-heading"
-    class="bg-base-100 py-16 lg:py-24"
+    class="bg-base-50 py-16 lg:py-24"
   >
     <NContainer>
       <!-- Heading row: eyebrow + H2 left, CTAs right. -->
       <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-[44rem]">
           <MhHomeEyebrow>{{ copy.label }}</MhHomeEyebrow>
-          <h2 id="commission-heading" class="mt-4 text-display font-semibold text-green-600">
+          <h2 id="commission-heading" class="mt-4 text-display font-semibold text-base-900">
             {{ copy.headline }}
           </h2>
         </div>
         <div class="flex shrink-0 flex-col gap-3 sm:flex-row sm:flex-wrap">
           <NButton
             :to="copy.ctaPrimary.to"
-            color="brand"
+            color="accent"
             shape="pill"
             size="lg"
             class="w-full sm:w-auto"
@@ -30,7 +30,7 @@
             variant="outline"
             shape="pill"
             size="lg"
-            class="w-full border-green-600 bg-base-0 text-green-600 sm:w-auto"
+            class="w-full bg-base-0 sm:w-auto"
           >
             <NIcon name="download" :size="18" />
             {{ copy.ctaSecondary.label }}
@@ -55,7 +55,7 @@
             >
               <span
                 aria-hidden="true"
-                class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-green-600 text-lime-400"
+                class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-500"
               >
                 <NIcon :name="feature.icon" :size="24" />
               </span>
@@ -78,8 +78,8 @@
 
 <script setup lang="ts">
 /**
- * 05 Commission a Programme — light grey band. Heading row with CTAs; body + four features
- * (lime-on-green icon discs) left, the programme dashboard component right.
+ * 05 Commission a Programme — warm-white band. Heading row with CTAs; body + four features
+ * (green icons on light-green discs) left, the programme dashboard component right.
  */
 import { ref } from "vue";
 import { COMMISSION_COPY } from "../../domain/home-copy";

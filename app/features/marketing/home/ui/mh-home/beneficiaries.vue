@@ -8,7 +8,7 @@
     <NContainer>
       <header class="mx-auto max-w-[44rem] text-center">
         <MhHomeEyebrow class="justify-center">{{ copy.label }}</MhHomeEyebrow>
-        <h2 id="for-you-heading" class="mt-4 text-display font-semibold text-green-600">
+        <h2 id="for-you-heading" class="mt-4 text-display font-semibold text-base-900">
           {{ copy.headline }}
         </h2>
       </header>
@@ -83,7 +83,7 @@
           <div class="mt-8">
             <NButton
               :to="copy.cta.to"
-              color="brand"
+              color="accent"
               shape="pill"
               size="lg"
               class="w-full sm:w-auto"

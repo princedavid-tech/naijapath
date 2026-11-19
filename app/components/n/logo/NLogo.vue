@@ -16,7 +16,7 @@
         width="36"
         height="36"
         rx="9"
-        :fill="props.tone === 'inverse' ? '#FFFFFF' : '#1B6B3A'"
+        :fill="props.tone === 'inverse' ? '#FFFFFF' : '#1E6428'"
       />
       <path
         d="M8 26c5 0 6-5 10-8s6-3 10-8"

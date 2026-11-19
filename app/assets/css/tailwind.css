@@ -23,13 +23,13 @@
 
     /* ── green (brand) ───────────────────────────────────────────── */
     --green-50: #f0f7f2; /* mint section background */
-    --green-100: #e8f0eb;
+    --green-100: #e8f5ea; /* Light Green Tint (guidelines): highlighted cards, tinted bands */
     --green-150: #cfe3d6;
-    --green-500: #1b6b3a; /* primary: headlines, buttons, accents, focus ring */
-    --green-600: #1b3a2d; /* deep: Commission band, Organisations card, footer ONLY */
+    --green-500: #1e6428; /* Naijapath Green (guidelines): nav bar, hero, links, icons, focus */
+    --green-600: #1b3a2d; /* hover/pressed step of green-500 only — not a surface colour */
 
     /* ── terracotta (replaces guideline orange #D24B00, which fails AA for 16px white) ── */
-    --terracotta-50: #fbefea;
+    --terracotta-50: #fdf0ea; /* Light Orange Tint (guidelines) */
     --terracotta-100: #f3d9ce;
     --terracotta-150: #e7bba8;
     --terracotta-500: #b5451b;
@@ -49,11 +49,6 @@
     --info-50: #eff6ff;
     --info-150: #bfdbfe;
     --info-500: #1d4ed8;
-
-    /* ── lime (accent of the final layout) — only ON green-600 or behind green-600 text.
-          Never as text on white/light: it has no contrast there. ───────────────── */
-    --lime-400: #c4f22f;
-    --lime-500: #b2e01c; /* hover */
 
     /* ── amber (rating stars only) ─────────────────────────────────── */
     --amber-500: #d97706;
@@ -114,8 +109,6 @@
   --color-info-500: var(--info-500);
 
   --color-amber-500: var(--amber-500);
-  --color-lime-400: var(--lime-400);
-  --color-lime-500: var(--lime-500);
 
   /* Breakpoint reset: defined once, here. */
   --breakpoint-*: initial;

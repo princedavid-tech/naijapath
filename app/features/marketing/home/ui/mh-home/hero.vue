@@ -2,7 +2,8 @@
   <section
     :id="HOME_SECTION_IDS.hero"
     aria-labelledby="hero-heading"
-    class="relative isolate overflow-hidden bg-base-100"
+    data-surface="dark"
+    class="relative isolate overflow-hidden bg-green-500 text-base-0"
   >
     <!-- Dot clusters (decorative). -->
     <svg
@@ -16,7 +17,7 @@
         :cx="d[0]"
         :cy="d[1]"
         r="2.6"
-        fill="var(--base-150)"
+        fill="rgb(255 255 255 / 0.2)"
       />
     </svg>
     <svg
@@ -30,34 +31,34 @@
         :cx="d[0]"
         :cy="d[1]"
         r="2.6"
-        fill="var(--base-150)"
+        fill="rgb(255 255 255 / 0.2)"
       />
     </svg>
 
     <NContainer
-      class="grid grid-cols-1 items-center gap-y-14 pt-12 pb-16 sm:pt-16 lg:grid-cols-2 lg:gap-x-12 lg:pt-20 lg:pb-24"
+      class="grid grid-cols-1 items-center gap-y-14 pt-12 pb-16 sm:pt-16 lg:grid-cols-2 lg:gap-x-12 lg:pt-12 lg:pb-14"
     >
       <!-- Copy -->
       <div class="max-w-[36rem]">
-        <MhHomeEyebrow class="mh-hero-in [--d:0ms]">{{ copy.tag }}</MhHomeEyebrow>
+        <MhHomeEyebrow tone="dark" class="mh-hero-in [--d:0ms]">{{ copy.tag }}</MhHomeEyebrow>
 
         <h1
           id="hero-heading"
-          class="mh-hero-in mt-5 font-heading text-hero font-semibold text-green-600 [--d:80ms]"
+          class="mh-hero-in mt-5 font-heading text-hero font-bold text-base-0 [--d:80ms]"
         >
           {{ copy.headline }}
         </h1>
 
-        <p class="mh-hero-in mt-6 text-base text-base-600 sm:text-lead [--d:160ms]">
+        <p class="mh-hero-in mt-6 text-base text-base-0/80 sm:text-lead [--d:160ms]">
           {{ copy.subheadline }}
         </p>
 
         <div
-          class="mh-hero-in mt-9 flex flex-col gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8 [--d:240ms]"
+          class="mh-hero-in mt-9 flex flex-col gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 [--d:240ms]"
         >
           <NButton
             :to="copy.ctaPrimary.to"
-            color="brand"
+            color="accent"
             shape="pill"
             size="lg"
             class="w-full sm:w-auto"
@@ -65,12 +66,16 @@
             {{ copy.ctaPrimary.label }}
             <NIcon name="arrow-right" :size="18" weight="bold" />
           </NButton>
-          <NLink
+          <NButton
             :to="copy.ctaSecondary.to"
-            class="inline-flex min-h-11 items-center justify-center font-heading font-semibold text-green-600 underline decoration-[1.5px] underline-offset-4 hover:text-green-500"
+            color="inverse"
+            variant="outline"
+            shape="pill"
+            size="lg"
+            class="w-full sm:w-auto"
           >
             {{ copy.ctaSecondary.label }}
-          </NLink>
+          </NButton>
         </div>
 
         <ul
@@ -94,7 +99,7 @@
       </div>
 
       <!-- Collage: one tall tile left, three stacked right; slanted, black-and-white. -->
-      <div class="mx-auto w-full max-w-[32rem] lg:mr-0">
+      <div class="mx-auto w-full max-w-[32rem] lg:mr-0 lg:max-w-[min(28rem,calc(70svh-9rem))]">
         <div class="relative aspect-[1/1]">
           <figure class="mh-tile mh-card-in top-[20%] left-[4%] h-[58%] w-[40%] [--d:200ms]">
             <NuxtPicture
@@ -157,9 +162,9 @@
             viewBox="0 0 80 80"
             class="pointer-events-none absolute right-[-4%] bottom-[2%] z-10 w-[18%]"
           >
-            <path :d="star(52, 44, 26)" fill="var(--lime-400)" />
-            <path :d="star(22, 30, 12)" fill="var(--lime-400)" />
-            <path :d="star(30, 64, 6)" fill="var(--lime-400)" />
+            <path :d="star(52, 44, 26)" fill="var(--terracotta-150)" />
+            <path :d="star(22, 30, 12)" fill="var(--terracotta-150)" />
+            <path :d="star(30, 64, 6)" fill="var(--terracotta-150)" />
           </svg>
         </div>
 
@@ -174,8 +179,9 @@
 
 <script setup lang="ts">
 /**
- * 02 Hero. Light grey band: copy left; right, a slanted four-tile photo collage with a
- * "Book a Session" seal and lime sparkles. The first tile is the LCP element (preloaded,
+ * 02 Hero — Naijapath Green band (the one green content area the Design Guidelines allow),
+ * white copy, orange primary CTA. Right: slanted four-tile collage, "Book a Session" seal,
+ * light-orange sparkles; kept to ~70svh. The first tile is the LCP element (preloaded,
  * eager, fetchpriority="high"); the other hero-session tiles reuse the same URL (one fetch).
  * Load sequence is pure CSS (off under reduced motion).
  */

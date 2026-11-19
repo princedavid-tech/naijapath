@@ -1,5 +1,5 @@
 <template>
-  <div data-surface="dark" class="relative overflow-hidden bg-green-600 text-base-0">
+  <div class="relative overflow-hidden border-y border-green-150 bg-green-100 text-green-500">
     <!-- Decorative: the stage names are read in full in How NaijaPath Works. -->
     <div aria-hidden="true" :class="cn('mh-ticker flex w-max', paused && 'mh-paused')">
       <ul v-for="copyIndex in 2" :key="copyIndex" class="flex shrink-0 items-center">
@@ -9,7 +9,7 @@
           class="flex items-center gap-10 py-4 pr-10 font-heading text-xl font-semibold whitespace-nowrap sm:text-[1.75rem] lg:py-5"
         >
           <span>{{ name }}</span>
-          <svg viewBox="0 0 24 24" class="size-7 shrink-0 text-lime-400 sm:size-8">
+          <svg viewBox="0 0 24 24" class="size-7 shrink-0 text-terracotta-500 sm:size-8">
             <path
               d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1"
               stroke="currentColor"
@@ -24,7 +24,7 @@
     <!-- WCAG 2.2.2: moving content can be paused. -->
     <button
       type="button"
-      class="absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-green-600 text-lime-400 ring-1 ring-green-500 hover:bg-green-500 motion-reduce:hidden"
+      class="absolute top-1/2 right-2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border-2 border-green-500 bg-base-0 text-green-500 hover:bg-green-50 motion-reduce:hidden"
       :aria-label="paused ? MICROCOPY.a11y.playTicker : MICROCOPY.a11y.pauseTicker"
       :aria-pressed="paused ? 'true' : 'false'"
       @click="paused = !paused"

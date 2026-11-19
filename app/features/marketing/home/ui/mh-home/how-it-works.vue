@@ -8,7 +8,7 @@
     <NContainer>
       <header class="mx-auto max-w-[46rem] text-center">
         <MhHomeEyebrow class="justify-center">{{ copy.label }}</MhHomeEyebrow>
-        <h2 id="how-heading" class="mt-4 text-display font-semibold text-green-600">
+        <h2 id="how-heading" class="mt-4 text-display font-semibold text-base-900">
           {{ copy.headline }}
         </h2>
         <p class="mx-auto mt-5 max-w-[40rem] text-lead text-base-600">{{ copy.subheadline }}</p>
@@ -25,7 +25,7 @@
           class="absolute top-3 bottom-3 left-[13px] w-[3px] rounded-full bg-base-150 xl:top-[13px] xl:right-3 xl:bottom-auto xl:left-3 xl:h-[3px] xl:w-auto"
         >
           <span
-            class="mh-how-fill block size-full rounded-full bg-green-600"
+            class="mh-how-fill block size-full rounded-full bg-green-500"
             :data-revealed="listVisible"
           />
         </span>
@@ -35,17 +35,19 @@
           :key="stage.number"
           class="relative grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-4 xl:grid-cols-1 xl:grid-rows-[auto_1fr] xl:gap-y-6"
         >
-          <!-- Knob: white centre, lime ring. -->
+          <!-- Knob: white centre, orange accent ring. -->
           <span
             aria-hidden="true"
-            class="reveal relative z-10 mt-6 size-7 rounded-full border-[5px] border-lime-400 bg-base-0 ring-2 ring-green-600 xl:mt-0"
+            class="reveal relative z-10 mt-6 size-7 rounded-full border-[5px] border-terracotta-500 bg-base-0 ring-2 ring-green-500 xl:mt-0"
             :style="{ '--reveal-delay': `${200 + i * 220}ms` }"
             :data-revealed="listVisible"
           />
-          <article class="h-full rounded-xl border border-base-150 bg-base-100 p-6 xl:p-5 2xl:p-6">
+          <article
+            class="h-full rounded-xl border border-green-150 bg-green-100 p-6 xl:p-5 2xl:p-6"
+          >
             <p
               aria-hidden="true"
-              class="tabular font-heading text-stage font-semibold tracking-tight text-green-600"
+              class="tabular font-heading text-stage font-semibold tracking-tight text-green-500"
             >
               {{ stage.number }}
             </p>

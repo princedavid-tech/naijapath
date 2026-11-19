@@ -10,7 +10,7 @@
     >
       {{ copy.label }}
     </h2>
-    <p id="career-brief-note" class="mt-3 max-w-[32rem] text-base text-green-150">
+    <p id="career-brief-note" class="mt-3 max-w-[32rem] text-base text-base-150">
       {{ copy.note }}
     </p>
 
@@ -39,7 +39,7 @@
         />
         <NButton
           type="submit"
-          color="lime"
+          color="accent"
           shape="pill"
           size="lg"
           :disabled="state === 'submitting'"
@@ -60,7 +60,7 @@
         :class="
           cn(
             'mt-3 flex min-h-6 items-start gap-1.5 text-sm font-medium',
-            state === 'error' ? 'text-danger-100' : 'text-green-150',
+            state === 'error' ? 'text-danger-100' : 'text-base-150',
           )
         "
       >

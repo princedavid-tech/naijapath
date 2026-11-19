@@ -13,7 +13,7 @@
       <div v-for="m in d.metrics" :key="m.label" class="flex flex-col gap-0.5 px-5 py-4 sm:px-6">
         <dt class="order-2 text-sm leading-snug text-base-600">{{ m.label }}</dt>
         <dd
-          class="order-1 tabular font-heading text-[1.75rem] leading-none font-bold text-green-600"
+          class="order-1 tabular font-heading text-[1.75rem] leading-none font-bold text-base-900"
         >
           {{ m.value }}
           <span class="text-sm font-medium text-base-500">{{ m.of }}</span>
@@ -39,7 +39,7 @@
           v-for="(v, i) in d.chartValues"
           :key="i"
           :d="barPath(i, v)"
-          fill="#1B6B3A"
+          fill="#1E6428"
           :opacity="i === d.chartValues.length - 1 ? 1 : 0.78"
         >
           <title>{{ d.chartWeeks[i] }}: {{ v }}</title>

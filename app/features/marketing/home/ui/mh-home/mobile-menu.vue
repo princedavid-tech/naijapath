@@ -14,7 +14,7 @@
           </DialogTitle>
           <DialogDescription class="sr-only">{{ MICROCOPY.a11y.primaryNav }}</DialogDescription>
           <DialogClose
-            :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'text-green-600')"
+            :class="cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'text-green-500')"
             :aria-label="MICROCOPY.a11y.closeMenu"
           >
             <NIcon name="close" :size="24" />
@@ -30,7 +30,7 @@
                   cn(
                     'flex min-h-14 items-center font-heading text-lg',
                     link.audience === 'organisation'
-                      ? 'font-semibold text-green-600'
+                      ? 'font-semibold text-green-500'
                       : 'font-medium text-base-600',
                   )
                 "
@@ -46,10 +46,16 @@
         <div
           class="flex flex-col gap-3 border-t border-base-150 p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
         >
-          <NButton :to="NAV_COPY.ctaFilled.to" size="lg" class="w-full">
+          <NButton :to="NAV_COPY.ctaFilled.to" color="accent" shape="pill" size="lg" class="w-full">
             {{ NAV_COPY.ctaFilled.label }}
           </NButton>
-          <NButton :to="NAV_COPY.ctaGhost.to" variant="outline" size="lg" class="w-full">
+          <NButton
+            :to="NAV_COPY.ctaGhost.to"
+            variant="outline"
+            shape="pill"
+            size="lg"
+            class="w-full"
+          >
             {{ NAV_COPY.ctaGhost.label }}
           </NButton>
         </div>

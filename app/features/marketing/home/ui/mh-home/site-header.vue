@@ -2,33 +2,34 @@
   <!-- One <header> landmark. It sticks at -2.75rem from 640px, so the top strip (2.75rem)
        scrolls away and the bar below stays pinned. -->
   <header
+    data-surface="dark"
     data-slot="site-header"
     :class="
       cn(
-        'sticky top-0 z-40 border-b border-base-150 bg-base-0 transition-shadow duration-200 ease-brand sm:-top-11',
+        'sticky top-0 z-40 border-b border-green-600 bg-green-500 text-base-0 transition-shadow duration-200 ease-brand sm:-top-11',
         scrolled && 'shadow-card',
       )
     "
   >
-    <!-- Top strip: location left, social on a lime tab right. -->
-    <div data-surface="dark" class="hidden bg-green-600 text-base-0 sm:block">
+    <!-- Top strip: location left, social on an orange accent tab right. -->
+    <div class="hidden border-b border-base-0/15 sm:block">
       <div
         class="mx-auto flex h-11 w-full max-w-[90rem] items-stretch justify-between pl-6 lg:pl-8"
       >
         <p class="inline-flex items-center gap-2 text-sm">
-          <NIcon name="map-pin" :size="18" class="text-lime-400" />
+          <NIcon name="map-pin" :size="18" class="text-terracotta-150" />
           {{ MICROCOPY.footer.locationPill }}
         </p>
         <ul
           :aria-label="MICROCOPY.a11y.socialLabel"
-          class="mh-tab flex items-center gap-1 bg-lime-400 pr-6 pl-12 text-green-600 lg:pr-8"
+          class="mh-tab flex items-center gap-1 bg-terracotta-500 pr-6 pl-12 text-base-0 lg:pr-8"
         >
           <li v-for="s in HOME_SOCIAL" :key="s.id">
             <NLink
               v-if="s.href"
               :to="s.href"
               :aria-label="s.label"
-              class="inline-flex size-11 items-center justify-center rounded-full hover:bg-green-600/10"
+              class="inline-flex size-11 items-center justify-center rounded-full hover:bg-base-0/15"
             >
               <NIcon :name="s.id" :size="18" />
             </NLink>
@@ -48,7 +49,7 @@
         class="-m-1 inline-flex min-h-11 items-center rounded-sm p-1"
         :aria-label="MICROCOPY.a11y.homeLink"
       >
-        <NLogo />
+        <NLogo tone="inverse" />
       </NLink>
 
       <!-- Desktop navigation (≥1440px: four links + two CTAs at 16px), centred between logo
@@ -63,8 +64,8 @@
                   'inline-flex min-h-11 items-center rounded-sm px-2.5 font-heading text-base whitespace-nowrap transition-colors duration-200 ease-brand',
                   // Audience weight difference (brief §01): organisations' link is heavier/darker.
                   link.audience === 'organisation'
-                    ? 'font-semibold text-green-600 hover:text-green-500'
-                    : 'font-medium text-base-600 hover:text-green-500',
+                    ? 'font-semibold text-base-0'
+                    : 'font-medium text-base-0',
                 )
               "
             >
@@ -75,12 +76,17 @@
       </nav>
 
       <div class="ml-auto flex items-center gap-2 2xl:ml-0">
-        <NButton :to="NAV_COPY.ctaGhost.to" variant="ghost" class="hidden 2xl:inline-flex">
+        <NButton
+          :to="NAV_COPY.ctaGhost.to"
+          color="inverse"
+          variant="ghost"
+          class="hidden 2xl:inline-flex"
+        >
           {{ NAV_COPY.ctaGhost.label }}
         </NButton>
         <NButton
           :to="NAV_COPY.ctaFilled.to"
-          color="brand"
+          color="accent"
           shape="pill"
           class="hidden sm:inline-flex"
         >
@@ -91,7 +97,7 @@
         <button
           type="button"
           :class="
-            cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'text-green-600 2xl:hidden')
+            cn(buttonVariants({ color: 'inverse', variant: 'ghost', size: 'icon' }), '2xl:hidden')
           "
           :aria-label="MICROCOPY.a11y.openMenu"
           aria-haspopup="dialog"
@@ -108,8 +114,8 @@
 
 <script setup lang="ts">
 /**
- * 01 Navigation Bar. Dark top strip (location + social on a lime tab), then a white sticky bar
- * that gains a subtle shadow after 80px.
+ * 01 Navigation Bar — Naijapath Green with white text (Design Guidelines). Top strip (location +
+ * social on an orange accent tab) scrolls away; the bar sticks and gains a shadow after 80px.
  * The mobile sheet (mobile-menu.vue) is mounted on first open and pre-fetched when the browser
  * is idle, so the first tap is instant on any reasonable connection.
  */

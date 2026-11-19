@@ -4,12 +4,12 @@
     :id="HOME_SECTION_IDS.stories"
     tabindex="-1"
     aria-labelledby="stories-heading"
-    class="overflow-hidden bg-base-100 py-16 lg:py-24 defer-render"
+    class="overflow-hidden bg-base-50 py-16 lg:py-24 defer-render"
   >
     <NContainer>
       <header class="max-w-[48rem]">
         <MhHomeEyebrow>{{ copy.label }}</MhHomeEyebrow>
-        <h2 id="stories-heading" class="mt-4 text-display font-semibold text-green-600">
+        <h2 id="stories-heading" class="mt-4 text-display font-semibold text-base-900">
           {{ copy.headline }}
         </h2>
         <p class="mt-5 max-w-[36rem] text-lead text-base-600">{{ copy.subheadline }}</p>
@@ -39,10 +39,7 @@
           <button
             type="button"
             :class="
-              cn(
-                buttonVariants({ variant: 'outline', size: 'icon', shape: 'pill' }),
-                'border-green-600 bg-base-0 text-green-600',
-              )
+              cn(buttonVariants({ variant: 'outline', size: 'icon', shape: 'pill' }), 'bg-base-0')
             "
             :aria-label="MICROCOPY.a11y.storiesPrev"
             @click="step(-1)"
@@ -51,7 +48,9 @@
           </button>
           <button
             type="button"
-            :class="cn(buttonVariants({ color: 'brand', size: 'icon', shape: 'pill' }))"
+            :class="
+              cn(buttonVariants({ variant: 'outline', size: 'icon', shape: 'pill' }), 'bg-base-0')
+            "
             :aria-label="MICROCOPY.a11y.storiesNext"
             @click="step(1)"
           >

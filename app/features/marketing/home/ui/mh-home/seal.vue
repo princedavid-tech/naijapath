@@ -2,7 +2,7 @@
   <NLink :to="NAV_COPY.ctaFilled.to" :class="cn('group/seal block rounded-full', props.class)">
     <span class="sr-only">{{ NAV_COPY.ctaFilled.label }}</span>
     <svg aria-hidden="true" viewBox="0 0 120 120" class="size-full">
-      <path :d="SCALLOP" fill="var(--green-600)" />
+      <path :d="SCALLOP" fill="var(--terracotta-500)" />
       <g class="mh-seal-text">
         <defs>
           <path :id="ringId" d="M60 60m-38 0a38 38 0 1 1 76 0a38 38 0 1 1 -76 0" />
@@ -19,11 +19,11 @@
           </textPath>
         </text>
       </g>
-      <circle cx="60" cy="60" r="17" fill="var(--lime-400)" />
+      <circle cx="60" cy="60" r="17" fill="var(--base-0)" />
       <path
         d="M52 60h16m-6-6 6 6-6 6"
         fill="none"
-        stroke="var(--green-600)"
+        stroke="var(--green-500)"
         stroke-width="2.6"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -34,9 +34,9 @@
 
 <script setup lang="ts">
 /**
- * Round "Book a Session" seal: scalloped green disc, the CTA label set around the ring, lime
- * centre with an arrow. A real link (its name is the visible CTA label). The ring turns on
- * hover/focus only — no unprompted motion.
+ * Round "Book a Session" seal (a CTA, so brand orange): scalloped disc, the label set around the
+ * ring in white, white centre with a green arrow. A real link (its name is the visible CTA label).
+ * The ring turns on hover/focus only — no unprompted motion.
  */
 import { useId, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";

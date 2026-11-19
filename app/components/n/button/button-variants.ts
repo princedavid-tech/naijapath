@@ -19,7 +19,8 @@ export const buttonVariants = cva(
   ],
   {
     variants: {
-      color: { primary: "", accent: "", inverse: "", brand: "", lime: "" },
+      // Guidelines: accent (orange) = primary CTA; primary outline (2px green) = secondary.
+      color: { primary: "", accent: "", inverse: "" },
       variant: { solid: "", outline: "", ghost: "" },
       size: {
         default: "min-h-11 px-5 py-2.5",
@@ -28,7 +29,7 @@ export const buttonVariants = cva(
       },
       shape: {
         default: "rounded-sm",
-        // Pill: the final layout's CTA shape, used site-wide.
+        // Pill (24px+): the final layout's CTA shape, used site-wide.
         pill: "rounded-full",
       },
     },
@@ -69,19 +70,6 @@ export const buttonVariants = cva(
         color: "accent",
         variant: "ghost",
         class: "border-transparent bg-transparent text-terracotta-500 hover:text-terracotta-600",
-      },
-      // brand — deep green with lime label (the layout's main CTA on light surfaces)
-      {
-        color: "brand",
-        variant: "solid",
-        class:
-          "border-green-600 bg-green-600 text-lime-400 hover:border-green-500 hover:bg-green-500",
-      },
-      // lime — lime with deep-green label (CTA on dark green surfaces)
-      {
-        color: "lime",
-        variant: "solid",
-        class: "border-lime-400 bg-lime-400 text-green-600 hover:border-lime-500 hover:bg-lime-500",
       },
       // inverse — white, for dark green surfaces
       {

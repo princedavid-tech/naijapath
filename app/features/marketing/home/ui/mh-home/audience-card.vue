@@ -4,8 +4,8 @@
       cn(
         'group/card relative flex flex-col gap-2.5 rounded-xl p-2.5 transition-shadow duration-200 ease-brand',
         props.lit
-          ? 'flex-col-reverse justify-end bg-lime-400 text-green-600 [--focus-ring:var(--green-600)]'
-          : 'bg-base-0/[0.06]',
+          ? 'flex-col-reverse justify-end border border-green-150 bg-green-100'
+          : 'border border-base-150 bg-base-0 shadow-card hover:shadow-card-hover',
         props.class,
       )
     "
@@ -32,28 +32,24 @@
       :class="
         cn(
           'flex flex-1 flex-col rounded-lg border p-5',
-          props.lit ? 'border-green-600/25' : 'border-base-0/15',
+          props.lit ? 'border-green-150 bg-base-0/60' : 'border-base-150',
         )
       "
     >
-      <p
-        :class="
-          cn('font-heading text-sm font-semibold', props.lit ? 'text-green-600' : 'text-lime-400')
-        "
-      >
+      <p :class="'font-heading text-sm font-semibold text-green-500'">
         {{ props.card.audience }}
       </p>
       <h3
         :class="
           cn(
             'mt-2 border-b pb-4 font-heading text-xl leading-snug font-semibold',
-            props.lit ? 'border-green-600/25 text-green-600' : 'border-base-0/15 text-base-0',
+            props.lit ? 'border-green-150 text-base-900' : 'border-base-150 text-base-900',
           )
         "
       >
         {{ props.card.headline }}
       </h3>
-      <p :class="cn('mt-4 text-base', props.lit ? 'text-green-600' : 'text-base-0/80')">
+      <p class="mt-4 text-base text-base-600">
         {{ props.card.body }}
       </p>
       <!-- Stretched link: the whole card is the hit area; the visible text is the accessible name. -->
@@ -62,7 +58,7 @@
         :class="
           cn(
             'mt-auto pt-5 after:absolute after:inset-0 after:rounded-xl after:content-[\'\']',
-            props.lit ? 'text-green-600' : 'text-lime-400 hover:text-base-0',
+            'text-green-500 hover:text-green-600',
           )
         "
       >
@@ -74,8 +70,8 @@
 
 <script setup lang="ts">
 /**
- * One "front door": photo + bordered text box (title, rule, body, link). The lit card is lime
- * with the text box above the photo.
+ * One "front door": photo + bordered text box (title, rule, body, link). The highlighted card
+ * (Light Green Tint, per the Design Guidelines) puts the text box above the photo.
  */
 import type { HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";

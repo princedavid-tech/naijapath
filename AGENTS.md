@@ -13,11 +13,14 @@ Read `docs/index.md` for the catalogue. This file is what surprised us while bui
 3. **No AI-generated imagery of people.** See `IMAGE_CREDITS.md`.
 4. Accessibility rules from the Design Guidelines are launch blockers: run `npm run contrast` after any
    colour change; keep focus rings, 44px targets, 16px body text, `aria-live` for status.
-5. **Final layout (Nov 2026)** — the client-approved design sets the palette use: deep green
-   (`green-600`) for the top strip, stage ticker, Join band, footer and primary CTAs; **lime**
-   (`lime-400`) only on green-600 or behind green-600 text (never as text on light surfaces);
-   pill CTAs site-wide; photos rendered black-and-white (`grayscale`). This supersedes the older
-   "green-600 in exactly three places" and "pill in the hero only" rules.
+5. **Colour follows the Design Guidelines (Sept 2026)** on the final layout (Nov 2026):
+   Naijapath Green `green-500` (#1E6428) is a surface **only** for the nav bar and the hero;
+   every other section is white / warm white (`base-50`) / Light Green Tint (`green-100`);
+   H1/H2 on light surfaces are Near Black (`base-900`); green is for links, icons, figures and
+   secondary (outline) buttons; **orange is for CTAs and small accents only** — implemented as
+   `terracotta-500` (#B5451B) because the guideline #D24B00 gives 4.4:1 with 16px white labels;
+   footer is Near Black. `green-600` is a hover step, not a surface. No lime. Pill CTAs and
+   black-and-white photos come from the approved layout.
 
 ## Things that will bite you
 

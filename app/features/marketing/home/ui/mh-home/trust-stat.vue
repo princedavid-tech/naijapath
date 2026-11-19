@@ -8,7 +8,7 @@
     >
       <MhHomeDots class="absolute top-1/2 left-1/2 max-w-none -translate-1/2 bg-base-0 py-0.5" />
     </span>
-    <p class="tabular font-heading text-[2.5rem] leading-none font-semibold text-green-600">
+    <p class="tabular font-heading text-[2.5rem] leading-none font-semibold text-green-500">
       <span ref="valueEl" aria-hidden="true">{{ display }}</span>
       <span class="sr-only">{{ props.stat.number }}</span>
     </p>
