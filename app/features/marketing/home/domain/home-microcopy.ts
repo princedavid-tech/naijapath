@@ -26,8 +26,6 @@ export const MICROCOPY = {
     storiesPrev: "Previous story",
     storiesNext: "Next story",
     storiesList: "Stories",
-    pauseTicker: "Pause the moving banner",
-    playTicker: "Play the moving banner",
   },
 
   images: {

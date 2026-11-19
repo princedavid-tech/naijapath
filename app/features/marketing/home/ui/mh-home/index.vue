@@ -9,7 +9,6 @@
     <LazyMhHomeSiteHeader hydrate-on-idle />
     <main :id="HOME_SECTION_IDS.main" tabindex="-1" class="flex-1">
       <LazyMhHomeHero hydrate-on-idle />
-      <LazyMhHomeTicker hydrate-on-idle />
       <!-- §2.3 Intro + numbers, then §2.4 For You. -->
       <LazyMhHomeTrustBar :hydrate-on-visible="EARLY" />
       <LazyMhHomeBeneficiaries :hydrate-on-visible="EARLY" />
@@ -24,8 +23,8 @@
 
 <script setup lang="ts">
 /**
- * Homepage root — the brief's sections (01–09) in the final layout's order: hero, stage
- * ticker, For You + trust figures, Commission, How it works, Stories, Join, footer.
+ * Homepage root — the brief's sections (01–09) in the redesign-v3 order: hero,
+ * intro + numbers, For You, Commission, How it works, Stories, Join, footer.
  */
 import { HOME_SECTION_IDS } from "../../domain/home-routes";
 import { MICROCOPY } from "../../domain/home-microcopy";
