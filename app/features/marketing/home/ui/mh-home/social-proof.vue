@@ -4,7 +4,7 @@
     :id="HOME_SECTION_IDS.stories"
     tabindex="-1"
     aria-labelledby="stories-heading"
-    class="sheet mt-3 bg-sand py-16 defer-render md:mt-4 lg:py-24"
+    class="sheet mt-3 bg-mist py-16 defer-render md:mt-4 lg:py-24"
   >
     <NContainer>
       <header class="max-w-[48rem]">

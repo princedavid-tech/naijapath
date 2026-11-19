@@ -89,6 +89,7 @@ const PAIRS = [
   ["white", 1, "forest", 3, "Focus ring on forest"],
   ["forest", 1, "sand", 3, "Line-art icon on sand"],
   ["forest", 1, "mist", 3, "Line-art icon on mist"],
+  ["forest", 0.7, "sand", 3, "Stage numbers not yet reached (large text, 70%)"],
   ["sage", 1, "forest", 3, "Line-art icon on forest"],
   ["ink", 0.2, "sheet", 1, "Light outline pill border (decorative; label carries contrast)"],
   ["forest", 0.35, "sheet", 1, "Forest outline pill border (decorative; label carries contrast)"],
