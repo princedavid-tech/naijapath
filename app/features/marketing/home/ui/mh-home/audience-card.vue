@@ -2,7 +2,7 @@
   <article
     :class="
       cn(
-        'group/card relative flex flex-col gap-2.5 rounded-xl p-2.5 transition-shadow duration-200 ease-brand',
+        'group/card relative flex flex-col gap-2 rounded-xl p-2 transition-shadow duration-200 ease-brand sm:gap-2.5 sm:p-2.5',
         props.lit
           ? 'flex-col-reverse justify-end border border-green-150 bg-green-100'
           : 'border border-base-150 bg-base-0 shadow-card hover:shadow-card-hover',
@@ -31,7 +31,7 @@
     <div
       :class="
         cn(
-          'flex flex-1 flex-col rounded-lg border p-5',
+          'flex flex-1 flex-col rounded-lg border p-4 sm:p-5',
           props.lit ? 'border-green-150 bg-base-0/60' : 'border-base-150',
         )
       "

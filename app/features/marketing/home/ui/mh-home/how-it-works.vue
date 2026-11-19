@@ -11,7 +11,9 @@
     :data-live="live || undefined"
     class="sheet mt-3 bg-sand md:mt-4"
   >
-    <div class="site-container section-y grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-x-12">
+    <div
+      class="site-container section-y grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-12"
+    >
       <!-- Left: pinned on desktop. -->
       <header class="lg:col-span-5">
         <div class="lg:sticky lg:top-28">
@@ -38,7 +40,7 @@
         <!-- Rail + drawn progress line. -->
         <span
           aria-hidden="true"
-          class="absolute top-2 bottom-2 left-[1.0625rem] w-0.5 rounded-full bg-forest/15 lg:left-[1.3125rem]"
+          class="absolute top-6 bottom-6 left-[1.0625rem] w-0.5 rounded-full bg-forest/15 lg:top-2 lg:bottom-2 lg:left-[1.3125rem]"
         >
           <span ref="fill" class="absolute inset-0 rounded-full bg-forest" />
         </span>
@@ -56,18 +58,27 @@
           :key="stage.number"
           :ref="(el) => setStage(el as HTMLElement | null, i)"
           :data-state="stateOf(i)"
-          class="mh-how-stage relative grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-5 py-4 lg:grid-cols-[2.75rem_minmax(0,1fr)] lg:gap-x-8"
+          class="mh-how-stage relative grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 py-1.5 sm:gap-x-5 lg:grid-cols-[2.75rem_minmax(0,1fr)] lg:gap-x-8 lg:py-4"
         >
-          <!-- Rail node. -->
-          <span aria-hidden="true" class="relative z-10 mt-7 flex justify-center lg:mt-9">
-            <span class="mh-how-node size-3.5 rounded-full border-2 border-forest bg-sand" />
+          <!-- Rail node. Phones: a numbered forest node; desktop: a small dot. -->
+          <span aria-hidden="true" class="relative z-10 flex justify-center pt-4 lg:pt-9">
+            <span
+              class="tabular inline-flex size-9 items-center justify-center rounded-full bg-forest text-sm font-medium text-white ring-4 ring-sand lg:hidden"
+              >{{ stage.number }}</span
+            >
+            <span
+              class="mh-how-node hidden size-3.5 rounded-full border-2 border-forest bg-sand lg:block"
+            />
           </span>
 
-          <div class="relative z-10 px-1 py-5 lg:px-8 lg:py-8">
+          <!-- Phones: a white card per stage. Desktop: transparent (the sliding plate does it). -->
+          <div
+            class="relative z-10 rounded-card bg-sheet p-5 shadow-soft lg:rounded-none lg:bg-transparent lg:px-8 lg:py-8 lg:shadow-none"
+          >
             <div class="flex items-baseline gap-5">
               <p
                 aria-hidden="true"
-                class="mh-how-num tabular text-[clamp(2.5rem,2rem+1.8vw,3.75rem)] leading-none font-medium tracking-[-0.03em] text-forest"
+                class="mh-how-num tabular hidden text-[clamp(2.5rem,2rem+1.8vw,3.75rem)] leading-none font-medium tracking-[-0.03em] text-forest lg:block"
               >
                 {{ stage.number }}
               </p>
@@ -75,7 +86,7 @@
                 <span class="sr-only">Stage {{ stage.number }}: </span>{{ stage.name }}
               </h3>
             </div>
-            <p class="measure mt-4 text-copy text-body">{{ stage.copy }}</p>
+            <p class="measure mt-2 text-copy text-body lg:mt-4">{{ stage.copy }}</p>
           </div>
         </li>
       </ol>

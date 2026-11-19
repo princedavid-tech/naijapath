@@ -150,7 +150,7 @@ onBeforeUnmount(() => window.removeEventListener("pointermove", onMove));
 <style scoped>
 /* The row starts on the container's left edge and runs out to the sheet's right edge. */
 .mh-track {
-  --gutter: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2rem);
   padding-inline: max(var(--gutter), calc((100% - 75rem) / 2));
   scroll-padding-inline: max(var(--gutter), calc((100% - 75rem) / 2));
   scroll-snap-type: x mandatory;

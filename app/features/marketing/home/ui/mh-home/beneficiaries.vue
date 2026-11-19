@@ -3,7 +3,7 @@
     :id="HOME_SECTION_IDS.forYou"
     tabindex="-1"
     aria-labelledby="for-you-heading"
-    class="sheet mt-3 bg-mist pt-16 pb-12 defer-render md:mt-4 lg:pt-24 lg:pb-16"
+    class="sheet mt-3 bg-mist pt-12 pb-10 defer-render md:mt-4 lg:pt-24 lg:pb-16"
   >
     <NContainer>
       <header class="mx-auto max-w-[44rem] text-center">
@@ -14,7 +14,7 @@
       </header>
 
       <div
-        class="mt-12 grid grid-cols-1 items-start gap-12 lg:mt-14 lg:grid-cols-2 lg:gap-14 xl:gap-16"
+        class="mt-8 grid grid-cols-1 items-start gap-8 lg:mt-14 lg:grid-cols-2 lg:gap-14 xl:gap-16"
       >
         <!-- Photo composition: wide photo + outline arcs and seal, then a full-width photo. -->
         <div class="grid grid-cols-[minmax(0,3fr)_minmax(0,1.1fr)] gap-3">

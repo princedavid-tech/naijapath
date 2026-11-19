@@ -41,13 +41,17 @@
 
       <h1
         id="hero-heading"
-        class="mt-3 max-w-[18ch] text-hero-v font-medium text-white lg:max-w-none"
+        class="mt-3 max-w-[20ch] text-hero-v font-medium text-white sm:max-w-[22ch] lg:max-w-none"
       >
-        <span v-for="(line, i) in HEADLINE_LINES" :key="i" class="mh-hero-mask block">
-          <span class="mh-hero-line inline-block" :style="{ '--d': `${300 + i * 120}ms` }">{{
-            line
-          }}</span>
-        </span>
+        <!-- Phones: one flowing sentence. From 1024px: the two approved lines, each rising
+             from its own mask. -->
+        <template v-for="(line, i) in HEADLINE_LINES" :key="i"
+          ><span class="mh-hero-mask lg:block"
+            ><span class="mh-hero-line lg:inline-block" :style="{ '--d': `${300 + i * 120}ms` }">{{
+              line
+            }}</span></span
+          >{{ i < HEADLINE_LINES.length - 1 ? " " : "" }}</template
+        >
       </h1>
 
       <NLink

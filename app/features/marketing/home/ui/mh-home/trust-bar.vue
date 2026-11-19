@@ -21,14 +21,12 @@
       </h2>
 
       <h3 class="sr-only">{{ MICROCOPY.a11y.trustBarHeading }}</h3>
-      <ul
-        class="mt-14 grid grid-cols-1 border-t border-hairline sm:grid-cols-2 lg:mt-20 lg:grid-cols-5"
-      >
+      <ul class="mt-10 grid grid-cols-2 border-t border-hairline lg:mt-20 lg:grid-cols-5">
         <MhHomeTrustStat v-for="stat in TRUST_STATS" :key="stat.label" :stat="stat" />
 
         <!-- The platform rating (locked badge copy), set as the fifth figure. -->
         <li
-          class="flex flex-col gap-3 border-hairline pt-8 pb-2 sm:border-l sm:pl-6 lg:border-l lg:pl-8"
+          class="col-span-2 flex flex-col gap-2 border-hairline pt-6 lg:col-span-1 lg:gap-3 lg:border-l lg:pt-8 lg:pb-2 lg:pl-8"
         >
           <span class="block text-sm font-medium text-ink">
             <NRating :value="HERO_COPY.badge2.rating" :size="16" />

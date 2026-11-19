@@ -8,7 +8,7 @@
     class="grain mt-3 md:mt-4"
   >
     <div
-      class="site-container section-y grid grid-cols-1 items-start gap-14 lg:grid-cols-12 lg:gap-x-12"
+      class="site-container section-y grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-14"
     >
       <div class="lg:col-span-6">
         <NEyebrow tone="dark">{{ copy.label }}</NEyebrow>
@@ -22,7 +22,7 @@
         <!-- 2×2 features: large line icons, hairline rules, no boxes. -->
         <ul
           :aria-label="MICROCOPY.a11y.commissionFeaturesLabel"
-          class="mt-10 grid grid-cols-1 gap-x-8 border-t border-white/15 sm:grid-cols-2"
+          class="mt-8 grid grid-cols-1 gap-x-8 border-t border-white/15 sm:grid-cols-2 lg:mt-10"
         >
           <li
             v-for="feature in copy.features"
@@ -37,7 +37,7 @@
           </li>
         </ul>
 
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:mt-10">
           <NButton :to="copy.ctaPrimary.to" color="accent" size="lg" class="w-full sm:w-auto">
             {{ copy.ctaPrimary.label }}
             <NIcon name="arrow-right" :size="18" />

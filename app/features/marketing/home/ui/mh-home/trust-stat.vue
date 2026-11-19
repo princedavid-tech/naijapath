@@ -3,7 +3,7 @@
   <li
     :class="
       cn(
-        'flex flex-col gap-3 border-hairline pt-8 pb-2 max-sm:border-b max-sm:pb-8 sm:pr-6 sm:even:border-l sm:even:pl-6 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0',
+        'flex flex-col gap-2 border-hairline py-6 pr-3 even:border-l even:pl-4 max-lg:border-b sm:pr-6 sm:even:pl-6 lg:gap-3 lg:pt-8 lg:pb-2 lg:border-l lg:pl-8 lg:first:border-l-0 lg:first:pl-0',
         props.class,
       )
     "

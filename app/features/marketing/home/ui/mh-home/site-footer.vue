@@ -1,9 +1,9 @@
 <template>
   <footer data-surface="dark" class="sheet mt-3 mb-3 bg-forest-deep text-base-0 md:mt-4 md:mb-4">
     <!-- Join (white, hatched bottom edge) sits directly above. -->
-    <NContainer class="pt-14 pb-8 lg:pt-16">
+    <NContainer class="pt-12 pb-8 lg:pt-16">
       <!-- Top: brand left, Career Brief right. -->
-      <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
+      <div class="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
         <div class="lg:col-span-5">
           <NLink
             :to="HOME_ROUTES.home"
@@ -47,7 +47,7 @@
 
       <nav
         :aria-label="MICROCOPY.a11y.footerNav"
-        class="mt-12 grid grid-cols-1 gap-10 border-t border-base-0/15 pt-12 sm:grid-cols-3 sm:gap-6"
+        class="mt-10 grid grid-cols-2 gap-8 border-t border-base-0/15 pt-10 sm:grid-cols-3 sm:gap-6 lg:mt-12 lg:pt-12"
       >
         <div v-for="col in copy.columns" :key="col.header">
           <h2
