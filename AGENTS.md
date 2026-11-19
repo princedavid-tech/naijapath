@@ -8,8 +8,11 @@ Read `docs/index.md` for the catalogue. This file is what surprised us while bui
    `app/features/marketing/home/domain/home-copy.ts`. Don't edit, "improve" or add marketing lines.
    Any string not in the brief goes in `home-microcopy.ts` and must be reviewed by the client.
    The brief itself uses both "NaijaPath" and "Naijapath" — preserved as written; ask before unifying.
-2. **No invented testimonials, quotes, names, employers or statistics.** Placeholder testimonial cards
-   only render with `NUXT_PUBLIC_SHOW_PLACEHOLDER_TESTIMONIALS` (default off in production).
+2. **No invented testimonials, quotes, names, employers or statistics presented as real.** Real,
+   consented testimonials go in `TESTIMONIALS` (home-testimonials.ts). Until then, the visibly
+   labelled `SAMPLE_TESTIMONIALS` (no photos, no stars, no real employers) render only with
+   `NUXT_PUBLIC_SHOW_PLACEHOLDER_TESTIMONIALS` (default off in production). `content-lock --check`
+   in dev therefore lists the sample strings as "not in lock": expected, never lock them.
 3. **No AI-generated imagery of people.** See `IMAGE_CREDITS.md`.
 4. Accessibility rules from the Design Guidelines are launch blockers: run `npm run contrast` after any
    colour change; keep focus rings, 44px targets, 16px body text, `aria-live` for status.

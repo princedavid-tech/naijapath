@@ -2,82 +2,77 @@
   <figure
     :class="
       cn(
-        'grid h-full grid-cols-1 gap-8 rounded-xl border border-base-150 bg-base-0 p-4 sm:p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:p-8',
-        !props.testimonial && 'border border-dashed border-base-150',
+        'flex h-full flex-col rounded-card border border-hairline bg-sheet p-7 shadow-soft sm:p-9',
         props.class,
       )
     "
   >
-    <!-- Portrait (or a neutral slot while the testimonial is pending). -->
-    <div
-      class="flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-base-100"
-    >
+    <div class="flex items-start justify-between gap-4">
+      <!-- Large quote mark (line-art, decorative). -->
+      <NIcon name="quote" :size="56" :stroke="1.25" class="-ml-1 text-forest" />
+      <NPill v-if="props.testimonial.sample" tone="muted" size="sm" class="shrink-0">
+        {{ MICROCOPY.testimonials.sampleBadge }}
+      </NPill>
+      <NRating v-else-if="props.testimonial.rating" :value="props.testimonial.rating" :size="16" />
+    </div>
+
+    <blockquote class="mt-6 flex-1">
+      <p class="text-[clamp(1.125rem,1rem+0.5vw,1.375rem)] leading-[1.45] text-ink">
+        “{{ props.testimonial.quote }}”
+      </p>
+    </blockquote>
+
+    <figcaption class="mt-8 flex items-center gap-4 border-t border-hairline pt-6">
       <NuxtImg
-        v-if="props.testimonial?.photo"
+        v-if="props.testimonial.photo && !props.testimonial.sample"
         :src="props.testimonial.photo"
         :alt="`Profile photo of ${props.testimonial.name}`"
-        width="480"
-        height="480"
+        width="112"
+        height="112"
         fit="cover"
         format="webp"
         loading="lazy"
-        class="size-full object-cover grayscale"
+        class="photo-grade size-14 rounded-full object-cover"
       />
-      <NAvatar v-else size="lg" />
-    </div>
-
-    <div class="flex flex-col justify-between gap-8">
-      <!-- Real testimonial -->
-      <template v-if="props.testimonial">
-        <div class="flex flex-col gap-5">
-          <NRating :value="props.testimonial.rating" :size="18" />
-          <blockquote>
-            <p
-              class="font-heading text-xl leading-snug font-medium text-base-900 sm:text-2xl lg:text-[1.75rem]"
-            >
-              “{{ props.testimonial.quote }}”
-            </p>
-          </blockquote>
-        </div>
-        <figcaption class="border-t border-base-150 pt-5">
-          <p class="font-heading font-semibold text-base-900">{{ props.testimonial.name }}</p>
-          <p class="text-sm text-base-500">{{ props.testimonial.outcome }}</p>
-        </figcaption>
-      </template>
-
-      <!-- Placeholder: clearly marked, never invented. Design-only; gated off in production. -->
-      <template v-else>
-        <div class="flex flex-col gap-5">
-          <div class="flex items-center justify-between gap-3">
-            <span aria-hidden="true"><NRating :value="0" :size="18" /></span>
-            <NPill tone="muted" size="sm">{{ t.pendingBadge }}</NPill>
-          </div>
-          <p class="text-lg text-base-500 italic">{{ t.pendingQuote }}</p>
-          <div aria-hidden="true" class="flex flex-col gap-2.5">
-            <span class="h-3 w-full rounded-full bg-base-100" />
-            <span class="h-3 w-11/12 rounded-full bg-base-100" />
-            <span class="h-3 w-4/5 rounded-full bg-base-100" />
-          </div>
-        </div>
-        <figcaption class="border-t border-base-150 pt-5">
-          <p class="font-heading font-semibold text-base-600">{{ t.pendingName }}</p>
-          <p class="text-sm text-base-500">{{ t.pendingOutcome }}</p>
-        </figcaption>
-      </template>
-    </div>
+      <span
+        v-else
+        aria-hidden="true"
+        class="inline-flex size-14 shrink-0 items-center justify-center rounded-full bg-sage text-base font-medium text-forest"
+        >{{ initials }}</span
+      >
+      <span class="min-w-0">
+        <span class="block font-medium text-ink">{{ props.testimonial.name }}</span>
+        <span v-if="props.testimonial.role" class="block text-sm text-body">{{
+          props.testimonial.role
+        }}</span>
+        <span class="mt-1 block text-sm font-medium text-forest">{{
+          props.testimonial.outcome
+        }}</span>
+      </span>
+    </figcaption>
   </figure>
 </template>
 
 <script setup lang="ts">
-/** One story: portrait left, large quote right, name + outcome under a rule. */
-import type { HTMLAttributes } from "vue";
+/**
+ * §2.8 story card (redesign-v3): large line-art quote mark, the quote, then initials (or a
+ * consented photo for real testimonials), name, role and outcome. Real testimonials may show
+ * their rating; design samples show only the visible "Sample testimonial" label — never stars.
+ */
+import { computed, type HTMLAttributes } from "vue";
 import { cn } from "~/utils/utils";
 import type { Testimonial } from "../../domain/home-testimonials";
 import { MICROCOPY } from "../../domain/home-microcopy";
 
-const props = defineProps<{
-  testimonial?: Testimonial;
-  class?: HTMLAttributes["class"];
-}>();
-const t = MICROCOPY.testimonials;
+const props = defineProps<{ testimonial: Testimonial; class?: HTMLAttributes["class"] }>();
+
+const initials = computed(() =>
+  props.testimonial.name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .join("")
+    .replace(/[^A-Za-z]/g, "")
+    .slice(0, 2)
+    .toUpperCase(),
+);
 </script>

@@ -66,10 +66,8 @@ export const MICROCOPY = {
   },
 
   testimonials: {
-    pendingBadge: "Testimonial pending",
-    pendingQuote: "Quote to be added once collected from a platform user.",
-    pendingName: "Name pending",
-    pendingOutcome: "Outcome label pending",
+    // Visible on every design-sample card (dev only; see home-testimonials.ts).
+    sampleBadge: "Sample testimonial",
   },
 
   footer: {
