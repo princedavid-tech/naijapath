@@ -1,0 +1,143 @@
+/**
+ * MICROCOPY NOT IN THE BRIEF — the sign-in, contact and session-request pages.
+ * Every string here needs the client's review before launch (AGENTS.md rule 1). The brief's
+ * approved copy is reused only where it already exists (nav labels, footer tagline, copyright).
+ */
+export const PAGES_MICROCOPY = {
+  shell: {
+    backHome: "Back to the homepage",
+  },
+
+  common: {
+    sending: "Sending…",
+    errorFallback: "We could not send this right now. Please try again in a moment.",
+    errorSummary: "Please fix the highlighted fields and try again.",
+    optional: "(optional)",
+    choose: "Choose one",
+    nameLabel: "Full name",
+    nameRequired: "Enter your full name.",
+    emailLabel: "Email address",
+    emailPlaceholder: "name@example.com",
+    emailRequired: "Enter your email address.",
+    emailInvalid: "Enter a valid email address, like name@example.com.",
+    tooLong: (max: number) => `Keep this under ${max} characters.`,
+  },
+
+  auth: {
+    metaTitle: "Sign in | NaijaPath",
+    metaDescription: "Sign in to your NaijaPath account, or create one.",
+    title: "Welcome back",
+    lead: "Sign in to see your sessions, agreed actions and progress.",
+    tabsLabel: "Sign in or create an account",
+    tabSignIn: "Sign in",
+    tabSignUp: "Sign up",
+    passwordLabel: "Password",
+    passwordRequired: "Enter your password.",
+    showPassword: "Show password",
+    trouble: "Trouble signing in?",
+    troubleLink: "Contact us",
+  },
+
+  signIn: {
+    continue: "Continue",
+    submit: "Sign in",
+    sending: "Signing in…",
+    success: "Signed in. Taking you to your account…",
+    errorFallback: "We could not sign you in. Check your email and password and try again.",
+  },
+
+  signUp: {
+    passwordHint: "At least 8 characters.",
+    passwordTooShort: "Use at least 8 characters.",
+    termsBefore: "By creating an account you agree to the",
+    termsLink: "Terms of Service",
+    termsAnd: "and",
+    privacyLink: "Privacy Policy",
+    submit: "Create account",
+    sending: "Creating your account…",
+    success: "Account created. Taking you to your account…",
+    errorFallback: "We could not create your account right now. Please try again in a moment.",
+  },
+
+  contact: {
+    metaTitle: "Contact us | NaijaPath",
+    metaDescription:
+      "Questions about career guidance, commissioning a programme or joining as a practitioner? Send the NaijaPath team a message.",
+    title: "Talk to the NaijaPath team",
+    lead: "Questions about career guidance, commissioning a programme or joining as a career practitioner? Send us a message here and the team will reply to you by email.",
+    eyebrow: "Contact",
+    organisationLabel: "Organisation",
+    topicLabel: "What is this about?",
+    topicRequired: "Choose what your message is about.",
+    topics: [
+      { value: "general", label: "A general question" },
+      { value: "guidance", label: "Career guidance for myself" },
+      { value: "commission", label: "Commissioning a programme" },
+      { value: "practitioner", label: "Joining as a career practitioner" },
+      { value: "partnership", label: "Partnerships" },
+      { value: "media", label: "Press and media" },
+      { value: "other", label: "Something else" },
+    ],
+    messageLabel: "Message",
+    messageRequired: "Write your message.",
+    messageTooShort: "Tell us a little more (at least 10 characters).",
+    submit: "Send message",
+    success: "Thank you. Your message has been sent and we will reply by email.",
+  },
+
+  sessionRequest: {
+    metaTitle: "Book a session | NaijaPath",
+    metaDescription:
+      "Request a career guidance session with a vetted NaijaPath practitioner. Tell us where you are and what you need.",
+    eyebrow: "Book a session",
+    title: "Request a career guidance session",
+    lead: "Tell us where you are and what you need. We will match you with a vetted practitioner and confirm your session by email.",
+    stepsTitle: "What happens next",
+    steps: [
+      "We review your request and match you with a practitioner.",
+      "You receive a confirmation email with your session time.",
+      "After the session, your agreed actions are shared with you.",
+    ],
+    sectionAboutYou: "About you",
+    sectionSession: "Your session",
+    phoneLabel: "Phone number",
+    phoneHint: "Only used to reach you about this session.",
+    phoneInvalid: "Enter a valid phone number, like 0803 123 4567 or +234 803 123 4567.",
+    stageLabel: "Where are you in your career?",
+    stageRequired: "Choose where you are in your career.",
+    stages: [
+      { value: "student", label: "Student" },
+      { value: "graduate", label: "Recent graduate" },
+      { value: "early-career", label: "Early-career professional" },
+      { value: "experienced", label: "Experienced professional" },
+      { value: "changing", label: "Changing careers" },
+    ],
+    focusLabel: "What would you like help with?",
+    focusRequired: "Choose what you would like help with.",
+    focuses: [
+      { value: "direction", label: "Choosing a career direction" },
+      { value: "applications", label: "CV and job applications" },
+      { value: "interviews", label: "Interview preparation" },
+      { value: "switching", label: "Moving into a new field" },
+      { value: "growth", label: "Growing in my current role" },
+      { value: "other", label: "Something else" },
+    ],
+    timeLabel: "Preferred time (West Africa Time)",
+    times: [
+      { value: "weekday-morning", label: "Weekday mornings" },
+      { value: "weekday-afternoon", label: "Weekday afternoons" },
+      { value: "weekday-evening", label: "Weekday evenings" },
+      { value: "weekend", label: "Weekends" },
+      { value: "any", label: "Any time" },
+    ],
+    goalsLabel: "Tell us about your goals",
+    goalsHint: "A few sentences is enough: what you are working towards and what is in the way.",
+    goalsRequired: "Tell us a little about your goals.",
+    goalsTooShort: "Tell us a little more (at least 20 characters).",
+    consentLabel: "I agree that NaijaPath may contact me about this request, as described in the",
+    consentLink: "Privacy Policy",
+    consentRequired: "Tick the box so we can contact you about your session.",
+    submit: "Request my session",
+    success: "Thank you. Your request has been received. Check your email for the next steps.",
+  },
+} as const;

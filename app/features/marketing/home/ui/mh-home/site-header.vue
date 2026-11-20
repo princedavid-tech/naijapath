@@ -144,6 +144,7 @@ import { MICROCOPY } from "../../domain/home-microcopy";
 
 const ITEMS = [
   ...NAV_COPY.links.map((l) => ({ label: l.label, to: l.to, sectionId: hashTargetId(l.to) })),
+  { label: MICROCOPY.nav.contact, to: HOME_ROUTES.contact, sectionId: null as string | null },
   { label: NAV_COPY.ctaGhost.label, to: NAV_COPY.ctaGhost.to, sectionId: null as string | null },
 ];
 

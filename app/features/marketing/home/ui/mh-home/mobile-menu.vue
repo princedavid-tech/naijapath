@@ -22,7 +22,7 @@
         <nav :aria-label="MICROCOPY.a11y.primaryNav" class="site-container flex-1 pt-6 pb-8">
           <ul class="flex flex-col">
             <li
-              v-for="(link, i) in NAV_COPY.links"
+              v-for="(link, i) in LINKS"
               :key="link.label"
               class="mh-menu-item border-b border-hairline"
               :style="{ '--i': i }"
@@ -46,7 +46,7 @@
 
         <div
           class="site-container mh-menu-item flex shrink-0 flex-col gap-3 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:flex-row"
-          style="--i: 4"
+          style="--i: 5"
         >
           <NButton :to="NAV_COPY.ctaFilled.to" color="accent" size="lg" class="w-full sm:w-auto">
             {{ NAV_COPY.ctaFilled.label }}
@@ -77,7 +77,13 @@ import {
 } from "reka-ui";
 import { hashTargetId, scrollToSection } from "~/utils/scroll";
 import { NAV_COPY } from "../../domain/home-copy";
+import { HOME_ROUTES } from "../../domain/home-routes";
 import { MICROCOPY } from "../../domain/home-microcopy";
+
+const LINKS = [
+  ...NAV_COPY.links,
+  { label: MICROCOPY.nav.contact, to: HOME_ROUTES.contact },
+] as const;
 
 const open = defineModel<boolean>("open", { required: true });
 let pendingTarget: string | null = null;

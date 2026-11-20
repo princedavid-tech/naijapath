@@ -3,10 +3,81 @@
  * Every string here is listed in the build summary for client review. Keep them out of
  * home-copy.ts so the approved copy stays verifiably verbatim.
  */
+import { HOME_ROUTES } from "./home-routes";
+
 export const MICROCOPY = {
   meta: {
     title: "NaijaPath | Nigeria's First Digital Career Service Platform",
     ogImageAlt: "NaijaPath — Navigate your career with structured, verified guidance.",
+  },
+
+  // Nav item added at the owner's request (2026-11-20). Not in the brief: needs client review,
+  // and content-lock.md must be regenerated once approved.
+  nav: {
+    contact: "Contact",
+  },
+
+  // Floating chat assistant (owner request, 2026-11-20). A SCRIPTED helper, not AI and not a
+  // person; it says so. Replies only point to what the page already says. Needs client review.
+  assistant: {
+    launcher: "Chat with us",
+    close: "Close chat",
+    title: "NaijaPath assistant",
+    subtitle: "Automated help. The team can take over on WhatsApp.",
+    subtitleNoWhatsapp: "Automated help. The team replies to messages by email.",
+    greeting: "Hello! I am NaijaPath's automated assistant. What would you like help with?",
+    again: "Anything else I can help with?",
+    typing: "The assistant is typing…",
+    logLabel: "Conversation with the NaijaPath assistant",
+    repliesLabel: "Suggested questions",
+    whatsappCta: "Continue on WhatsApp",
+    contactCta: "Send the team a message",
+    whatsappPrefill: "Hello NaijaPath, I would like help with: ",
+    topics: [
+      {
+        id: "guidance",
+        label: "Find career guidance",
+        reply:
+          "Career guidance on NaijaPath is one-to-one with a career practitioner, and every session is documented. The quickest way to start is to request a session.",
+        links: [
+          { label: "Book a session", to: HOME_ROUTES.bookSession },
+          { label: "How NaijaPath works", to: HOME_ROUTES.howItWorks },
+        ],
+      },
+      {
+        id: "commission",
+        label: "Commission a programme",
+        reply:
+          "Organisations can commission career guidance for a group and follow progress as it happens. Tell the team about your programme and they will get back to you.",
+        links: [
+          { label: "Commission a programme", to: HOME_ROUTES.commissionSection },
+          { label: "Contact the team", to: HOME_ROUTES.contact },
+        ],
+      },
+      {
+        id: "practitioner",
+        label: "Join as a practitioner",
+        reply:
+          "Career practitioners can apply to join the NaijaPath network. This part of the page explains what is involved.",
+        links: [{ label: "Join as a practitioner", to: HOME_ROUTES.join }],
+      },
+      {
+        id: "account",
+        label: "Help with my account",
+        reply:
+          "You can sign in or create an account here. If something is not working, send the team a message.",
+        links: [
+          { label: "Sign in", to: HOME_ROUTES.signIn },
+          { label: "Contact the team", to: HOME_ROUTES.contact },
+        ],
+      },
+      {
+        id: "person",
+        label: "Talk to a person",
+        reply: "Of course. The team can pick this up with you directly.",
+        links: [],
+      },
+    ],
   },
 
   a11y: {

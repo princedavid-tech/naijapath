@@ -35,6 +35,11 @@ Read `docs/index.md` for the catalogue. This file is what surprised us while bui
 
 - **`--color-*: initial`** — stock Tailwind colours render *nothing*, silently. Invisible element?
   Check the palette first.
+- **`--radius-*: initial`** too — only `rounded-sm/lg/xl/card/sheet/full` exist. `rounded-2xl`,
+  `rounded-md`, `rounded-3xl` render square corners, silently.
+- **`v-slot` on a component tag + a named `<template #x>` inside it** crashes the Vue compiler
+  at build ("Cannot read properties of undefined (reading 'type')"), and **typecheck passes**.
+  Once a component gets a named slot, wrap the default content in `<template #default="…">`.
 - **Component folder naming.** Nuxt prefixes component names with their folder path. A file
   `n/field/NLabel.vue` registers as `NFieldNLabel`, so `<NLabel>` renders an empty comment — and
   **typecheck does not catch it**. Put each part in a folder named after it (`n/label/NLabel.vue`).
