@@ -18,6 +18,9 @@
       <LazyMhHomeJoin :hydrate-on-visible="EARLY" />
     </main>
     <LazyMhHomeSiteFooter :hydrate-on-visible="EARLY" />
+    <!-- Chat assistant launcher: painted with the page, interactive once the browser is idle;
+         its panel is a separate chunk loaded on first open. -->
+    <LazyMhHomeAssistant hydrate-on-idle />
   </div>
 </template>
 

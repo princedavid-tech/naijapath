@@ -95,6 +95,8 @@ const PAIRS = [
   ["forest", 0.35, "sheet", 1, "Forest outline pill border (decorative; label carries contrast)"],
   // ── Status ──
   ["success-500", 1, "success-50", 4.5, "Status pill: Confirmed / Completed"],
+  ["success-500", 1, "sheet", 4.5, "Form status: sent (sign in, contact, book a session)"],
+  ["muted", 1, "sheet", 3, "Boxed field border on white (non-text, 3:1)"],
   ["danger-500", 1, "sheet", 4.5, "Form error text on light"],
   ["danger-100", 1, "forest", 4.5, "Form error text on forest"],
   ["amber-500", 1, "sheet", 3, "Rating stars (always with the numeric score)"],

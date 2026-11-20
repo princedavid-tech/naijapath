@@ -66,6 +66,11 @@ export default defineNuxtConfig({
       // Placeholder testimonial cards must never ship to production (brief §07).
       // Override with NUXT_PUBLIC_SHOW_PLACEHOLDER_TESTIMONIALS=true|false.
       showPlaceholderTestimonials: process.env.NODE_ENV !== "production",
+      // WhatsApp number for the chat assistant and the Contact page, international format
+      // (e.g. 2348031234567). NOT supplied yet: while empty, "Continue on WhatsApp" falls back
+      // to the Contact page. Set NUXT_PUBLIC_WHATSAPP_NUMBER at BUILD time: the homepage is
+      // prerendered, so its HTML carries the value it was built with.
+      whatsappNumber: "",
     },
   },
 

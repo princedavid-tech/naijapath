@@ -33,6 +33,7 @@ export const HOME_ROUTES = {
   findGuidance: "/find-career-guidance",
   bookSession: "/book-a-session",
   signIn: "/sign-in",
+  contact: "/contact",
   commission: "/commission-a-programme",
   joinPractitioner: "/join-as-a-career-practitioner",
   stories: "/stories",

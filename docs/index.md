@@ -47,6 +47,9 @@ Variants live in sibling `*-variants.ts` files (importable from plain `.ts`).
 | `NLabel` | `label/NLabel.vue` | Always visible above its input; `required` adds `*` + SR text. |
 | `NInput` | `input/NInput.vue` | 16px text (no iOS zoom), `invalid` → 2px red border + `aria-invalid`; `describedby`; `surface="dark"` for the footer. |
 | `NFieldError` | `field-error/NFieldError.vue` | Icon + text, linked from the input via `aria-describedby`. |
+| `NTextarea` | `textarea/NTextarea.vue` | NInput's frame for multi-line text; `invalid`, `describedby`, `maxlength`. |
+| `NSelect` | `select/NSelect.vue` | Native `<select>` in the NInput frame + chevron. `options: {value,label}[]`; the empty first option is the prompt. |
+| `NCheckbox` | `checkbox/NCheckbox.vue` | Native checkbox; label slot and box share one 44px hit area. Error = red outline + linked `NFieldError`. |
 | `NContainer` | `container/NContainer.vue` | 1280px, 16/24/32px gutters. |
 | `NLogo` | `logo/NLogo.vue` | **Interim mark** — swap the inline SVG for the client's brandmark. |
 | `NSkipLink` | `skip-link/NSkipLink.vue` | First focusable element; targets `#main`. |
@@ -85,6 +88,37 @@ Sections (redesign-v3 order): `site-header` (+ `mobile-menu`, lazy) · `hero` ·
 `trust-bar` (§2.3 intro + numbers, + `trust-stat`) · `beneficiaries` (+ `agreed-actions-card`) ·
 `commission` (+ `cohort-dashboard-card`) · `how-it-works` ·
 `social-proof` (+ `testimonial-card`) · `join` (+ `audience-card`) · `site-footer` (+ `newsletter-form`).
+
+Floating chat assistant: `assistant` (launcher, SSR, `hydrate-on-idle`) + `assistant-panel`
+(lazy chunk on first open). Scripted and labelled "Automated"; replies live in `MICROCOPY.assistant`.
+"Talk to a person" / "Continue on WhatsApp" use `useWhatsappHref()` (`app/composables/useWhatsapp.ts`)
+from `NUXT_PUBLIC_WHATSAPP_NUMBER`; while unset they fall back to `/contact`. The homepage is
+prerendered, so set the number **at build time**.
+
+## Feature slice — `app/features/marketing/pages/`
+
+Standalone pages: `/sign-in` (Sign in / Sign up tabs; `?mode=sign-up`), `/contact`,
+`/book-a-session` (`app/pages/*.vue`). "Contact" is also in the homepage nav and mobile menu
+(`MICROCOPY.nav.contact`).
+
+```
+domain/          pages-microcopy.ts (ALL strings: not in the brief → client review)
+                 pages-routes.ts (paths + API endpoints, unconfirmed with the platform team)
+composition/     use-mp-submit (shared POST / aria-live / focus-first-error / live re-check) ·
+                 use-mp-sign-in (email first, then password) · use-mp-sign-up ·
+                 use-mp-contact · use-mp-session-request   (auto-imported)
+ui/mp-pages/     split (content left; right: `images` cross-fading on `active`, or `#aside`) ·
+                 auth-tabs (Sign in / Sign up: sliding pill, cross-fade, animated height) ·
+                 site-nav (nav bar for all three pages: full links ≥1440px, else the
+                 homepage's lazy mobile menu) ·
+                 box-field (icon + label inside the box; ring on the box) · password-toggle ·
+                 shell (book-a-session: site-nav + main + footer) · field · form-status ·
+                 sign-in-form · sign-up-form · contact-form · session-request-form → <MpPages…>
+```
+
+Validation runs on submit, then live for the fields whose error is showing; a failed submit moves
+focus to the first invalid field. `/sign-in` is `noindex`. No social sign-in buttons: there are no
+providers yet, and a button that does nothing is worse than none.
 
 ## Scripts
 
